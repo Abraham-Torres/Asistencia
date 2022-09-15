@@ -4,7 +4,7 @@
 $server = "localhost";
 $user = "root";
 $pass = "";
-$db = "asistencia";
+$db = "asistencias";
 
 $conexion = new mysqli($server, $user, $pass, $db);
 

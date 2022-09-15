@@ -7,23 +7,37 @@ if($varsesion == null || $varsesion = ''){
   die();
 }
 
-$operacion_emp=$_GET['Id_empleado'];
-echo $operacion_emp;
-$correo = $_SESSION['usuario']['correo'];
-$sql_puesto = "SELECT * FROM Puesto ";
-$puesto = mysqli_query($conexion,$sql_puesto);
-$repsuesta = mysqli_num_rows($puesto);
+$empleado=$_GET['Id_empleado'];
+$Correo = $_SESSION['usuario']['correo'];
+if ($stmt = $conexion->prepare("SELECT * FROM Empleado WHERE Id_Empleado=?")) {
+	
+  /* ligar parámetros para marcadores */
+  $stmt->bind_param("i", $empleado);
 
+  /* ejecutar la consulta */
+  $stmt->execute();
 
+  /* ligar variables de resultado */
+  $stmt->bind_result($id,$nombre,$correo,$edad,$password,$puesto,$estado);
+  
+  /* obtener valor */
+
+  if(!$result = $stmt->fetch() ){
+      echo "error de datos";
+  }else{
+      
+  }
+  
+
+  /* cerrar sentencia */
+  $stmt->close();
+ 
+      
+}
 ?>
-<?php
-    include "../../modulos/header.php";
 
-?>
   <!-- Google Font: Source Sans Pro -->
-  <?php
-    include "../../modulos/styles.php";
-?>
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -32,10 +46,7 @@ $repsuesta = mysqli_num_rows($puesto);
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-<?php
-    include "../../modulos/manu.php";
 
-?>
  <section class="content mt-4">
       <div class="container-fluid">
         <div class="row">
@@ -50,9 +61,9 @@ $repsuesta = mysqli_num_rows($puesto);
                        alt="User profile picture">
                 </div>
 
-                <h3 class="profile-username text-center">[user name]</h3>
+                <h3 class="profile-username text-center"><php ?></h3>
 
-                <p class="text-muted text-center">[puesto]</p>
+                <p class="text-muted text-center"><?php echo $nombre; ?> </p>
 
                 <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
@@ -88,7 +99,7 @@ $repsuesta = mysqli_num_rows($puesto);
                         <button type="button" data-toggle="modal" data-target="#correo" class="btn btn-xs btn-link btnOpenEdit"><i class="fa-solid fas fa-pen"></i> Editar</button>
                         <p id="correo">
                             <span class="text-muted">
-                                [email-user]
+                                <?php  echo $correo; ?>
                             </span>
                         </p>
                             </div><!--/form-group-->
@@ -96,11 +107,11 @@ $repsuesta = mysqli_num_rows($puesto);
 
                         <div class="col">
                       <div class="form-group">
-                        <small>RFC</small>
+                        <small>Edad</small>
                         <button type="button" data-toggle="modal" data-target="#RFC" class="btn btn-xs btn-link btnOpenEdit"><i class="fa-solid fas fa-pen"></i> Editar</button>
                         <p id="RFC">
                             <span class="text-muted">
-                                [RFC-user]
+                                <?php  echo $edad;?>
                             </span>
                         </p>
                             </div><!--/form-group-->
@@ -110,11 +121,11 @@ $repsuesta = mysqli_num_rows($puesto);
                             <div class="row">
                             <div class="col">
                       <div class="form-group">
-                        <small>RFC</small>
+                        <small>Puesto</small>
                         <button type="button" data-toggle="modal" data-target="#razonSocial" class="btn btn-xs btn-link btnOpenEdit"><i class="fa-solid fas fa-pen"></i> Editar</button>
                         <p id="razonSocial">
                             <span class="text-muted">
-                                [Razon social-user]
+                                <?php echo $puesto;?>
                             </span>
                         </p>
                             </div><!--/form-group-->

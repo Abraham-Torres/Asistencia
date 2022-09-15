@@ -1,38 +1,52 @@
 <?php
-include("conexion.php");
 session_start();
+include("conexion.php");
+
+
+
 
 $iniciar = htmlentities($_POST['iniciar']);
 $start= filter_var($iniciar, FILTER_SANITIZE_STRING);
 if(isset($start)){
+
     $Correo = filter_var($_POST['Correo'], FILTER_SANITIZE_STRING);
     $Pass = filter_var($_POST['Password'], FILTER_SANITIZE_STRING);
     
-   
-   $admin = $conexion->query("SELECT * FROM Administrador where Correo ='$Correo' and Password = '$Pass'");
-   
-   
-   $filas = $admin->num_rows;
-    echo $filas;
-   if($filas == 1){
-     $data = $admin->fetch_assoc();
-     
-     $_SESSION['usuario']['nombre'] = $data['Nombre'];
-     $_SESSION['usuario']['correo'] = $data['Correo'];
-     
-          
-        
-        header("location:../index.php");
-   }else{
-    
-        echo "error en algo";
-   } 
-   
-        
-        
-}else{
-    echo "error";
-}
 
+   
+    if ($stmt = $conexion->prepare("SELECT * FROM Administrador WHERE Correo=? AND Password=?")) {
+	
+        /* ligar parámetros para marcadores */
+        $stmt->bind_param("ss", $Correo, $Pass);
+    
+        /* ejecutar la consulta */
+        $stmt->execute();
+    
+        /* ligar variables de resultado */
+        $stmt->bind_result($id,$nombre,$correo,$edad,$password);
+        
+        /* obtener valor */
+        
+        
+        if(!$result = $stmt->fetch() ){
+            echo "error de contrasena";
+        }else{
+            echo $nombre;
+            echo $id;
+            $_SESSION['usuario']['nombre'] = $nombre;
+            $_SESSION['usuario']['correo'] = $correo;
+            header("location:../index.php");
+        }
+        
+    
+        /* cerrar sentencia */
+        $stmt->close();
+    }
+
+}
+    
+    /* cerrar conexión */
+    $conexion->close();
+    
 
 ?>

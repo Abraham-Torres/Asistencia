@@ -64,7 +64,7 @@ $filas = mysqli_num_rows($resultado);
                     <td>".$data['Password']."</td>
                     ";
                     ?>
-                    <td><a class="btn btn-block btn-success" href="vistas/paginas/puestos/operacion_emp_eli.php?Id_empleado=<?php echo $data['Id_Empleado'];?>" >Operaciones</a> </td>
+                    <td><a class="btn btn-block btn-success" href="index.php?pagina=puestos/operacion_emp_eli&Id_empleado=<?php echo $data['Id_Empleado'];?>" >Operaciones</a> </td>
                     
                     <?php
                       }
