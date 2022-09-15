@@ -56,42 +56,21 @@ if($varsesion == null || $varsesion = ''){
                 </a>
               </li>
             </ul>
-            <!--end-->
-
-            <!--inicio del elemento para administrar-->
+            
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="fas nav-icon fa-solid fa-screwdriver fa-wrench"></i>
-                
-                  
-                <p>ADMINISTRAR</p>
-                <i class="fa fa-solid fa-bars right"></i>
-                  
-                  
-                </a>
-              <!--inicio del elemento de vista de arbol de eliminar-->
-                <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="index.php?pagina=puestos/operaciones_empleado" class="nav-link">
-               
-                <p>ELIMINAR</p>
+                <i class="fas fa-solid fa-screwdriver fa-wrench nav-icon"> </i>
+                  <p>ADMINISTRAR</p>
+                  
                 </a>
-              </li>
-            </ul><!--fin de la vista de arbol-->
-
-            <!--inicio del elemento de vista de arbol de modificar-->
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="index.php?pagina=puestos/Datos_correctos" class="nav-link">
-                
-                  <p>MODIFICAR</p>
-                </a>
-              </li>
-            </ul><!--fin de la vista de arbol-->
-            <!--fin del elemento-->
               </li>
             </ul>
+            <!--end-->
+
+           
+            <!--inicio del elemento de vista de arbol de modificar-->
+            
             <!--end-->
 
             <!--inicio del elemento de categorias-->
