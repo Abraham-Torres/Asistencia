@@ -55,7 +55,8 @@ include("modelo/conexion.php");
         $_GET["pagina"]=="puestos/Datos_correctos"||
         $_GET["pagina"]=="puestos/operaciones_empleado"||
         $_GET["pagina"]=="asistencias/base_de_datos"||
-        $_GET["pagina"]=="puestos/operacion_emp_eli")
+        $_GET["pagina"]=="puestos/operacion_emp_eli"||
+        $_GET["pagina"]=="modelo/empleados/registra_empleado")
         
         
     {
