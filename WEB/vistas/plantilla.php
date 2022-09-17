@@ -48,7 +48,7 @@ include("modelo/conexion.php");
         $_GET["pagina"]=="puestos/base_de_datos"||
         $_GET["pagina"]=="puestos/nuevo_empleado"||
         $_GET["pagina"]=="puestos/administrar"||
-        $_GET["pagina"]=="puestos/categorias"||
+        $_GET["pagina"]=="tipo_puesto/operaciones"||
         $_GET["pagina"]=="index" ||
         $_GET["pagina"]=="administrador/perfil"||
         $_GET["pagina"]=="estados/categorias"||

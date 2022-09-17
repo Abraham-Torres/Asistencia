@@ -20,7 +20,7 @@ $filas = mysqli_num_rows($resultado);
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">ELIMINAR MIEMBRO</h3>
+                <h3 class="card-title">Puestos Registrados</h3>
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
@@ -39,12 +39,12 @@ $filas = mysqli_num_rows($resultado);
                 <table class="table table-hover text-nowrap">
                   <thead>
                     <tr>
-                      <th>ID</th>
+                    
                       <th>Nombre</th>
                       <th>Correo</th>
                       <th>Edad</th>
                       <th>Puesto</th>
-                      <th>Contraseña</th>
+                     
                       <th><i class="fa fa-solid fa-user-slash"></i>Operacion</th>
                     </tr>
                   </thead>
@@ -56,12 +56,12 @@ $filas = mysqli_num_rows($resultado);
                       while($data = mysqli_fetch_array($resultado)){
                     echo "
                     <tr>
-                    <td>".$data['Id_Empleado']."</td>
+                   
                     <td>".$data['Nombre']."</td>
                     <td>".$data['Correo']."</td>
                     <td>".$data['Edad']."</td>
                     <td>".$data['Puesto']."</td>
-                    <td>".$data['Password']."</td>
+                
                     ";
                     ?>
                     <td><a class="btn btn-block btn-success" href="index.php?pagina=puestos/operacion_emp_eli&Id_empleado=<?php echo $data['Id_Empleado'];?>" >Operaciones</a> </td>

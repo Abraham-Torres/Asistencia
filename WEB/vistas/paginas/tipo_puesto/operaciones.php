@@ -24,7 +24,7 @@ $filas = mysqli_num_rows($resultado);
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Categorias Puesto</h3>
+                <h3 class="card-title">Tipos de Puesto</h3>
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
@@ -44,7 +44,7 @@ $filas = mysqli_num_rows($resultado);
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Puesto</th>
+                      <th>Tipo de Puesto</th>
                     </tr>
                   </thead>
                   <tbody>

@@ -55,7 +55,7 @@ if(isset($reg)){
         <div class='card shadow'>
         <div class='row'>
                 <div class='col text-center'>
-                <h3>El producto se añadio a la tienda con éxito</h3>
+                <h3>Registro Exitoso</h3>
                 <br>
                 <img src='../../vistas/recursos/dist/img/correcto.png' class='center-all-contens'>
                 </div>
@@ -108,10 +108,10 @@ if(isset($reg)){
 }
 ?>
         
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    
     <script src="../../vistas/recursos/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
     <script src="../../vistas/recursos/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
