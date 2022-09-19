@@ -54,7 +54,7 @@ $repsuesta = mysqli_num_rows($puesto);
                         if($repsuesta){
                           while($data = mysqli_fetch_array($puesto)){
                             echo "
-                            <option value='".$data['Id_Puesto']."'>".$data['Puesto']."</option>
+                            <option value='".$data['Puesto']."'>".$data['Puesto']."</option>
                             ";
                             
                           }

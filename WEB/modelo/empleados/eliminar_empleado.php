@@ -10,7 +10,7 @@ include("../conexion.php");
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../../vistas/recursos/plugins/fontawesome-free/css/all.min.css">
   <!-- DataTables -->
-  <meta http-equiv="Refresh" content="5;../../index.php?pagina=puestos/operaciones_empleado">
+  <meta http-equiv="Refresh" content="2;../../index.php?pagina=puestos/operaciones_empleado">
   <link rel="stylesheet" href="../../vistas/recursos/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../../vistas/recursos/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="../../vistas/recursos/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
@@ -38,10 +38,13 @@ include("../conexion.php");
 
 
 
-if($eliminar=$_GET['Id_Empleado']){
-    $sql_elim_emp = "DELETE FROM Empleado WHERE Id_Empleado= '$eliminar'"; 
+if($eliminar = filter_var($_GET['Id_Empleado'], FILTER_SANITIZE_STRING)){
+    $funcion_eliminar = $conexion->prepare("DELETE FROM Empleado WHERE Id_Empleado =? ");
+    $funcion_eliminar->bind_param("i",$eliminar);
+    
+   
 
-    if(mysqli_query($conexion,$sql_elim_emp)){
+    if($funcion_eliminar->execute()){
     //Fucionamiento pendiente, el boton no redirecciona bien
         echo "
         <div class='container container-sm mt-4'>
@@ -59,7 +62,7 @@ if($eliminar=$_GET['Id_Empleado']){
                 <div class='col text-center'>
                         <p class='lead text-center'>
                             La pagina se redireccionara automaticamente. Si no es asi haga click en el siguiente boton.<br>
-                            <a href='../../index.php?pagina=puestos/nuevo_empleado' class='btn btn-primary btn-lg mt-4'>Volver a administración</a>
+                            <a href='../../index.php?pagina=puestos/operaciones_empleado' class='btn btn-primary btn-lg mt-4'>Volver a administración</a>
                         </p>
                 </div>
             </div>
@@ -88,7 +91,7 @@ if($eliminar=$_GET['Id_Empleado']){
                <div class='col text-center'>
                        <p class='lead text-center'>
                            La pagina se redireccionara automaticamente. Si no es asi haga click en el siguiente boton.<br>
-                           <a href='../../index.php?pagina=puestos/nuevo_empleado' class='btn btn-danger btn-lg mt-4'>Volver a administración</a>
+                           <a href='../../index.php?pagina=puestos/operaciones_empleado' class='btn btn-danger btn-lg mt-4'>Volver a administración</a>
                        </p>
                </div>
            </div>

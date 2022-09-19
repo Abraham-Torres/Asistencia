@@ -12,8 +12,6 @@ if(isset($start)){
     $Correo = filter_var($_POST['Correo'], FILTER_SANITIZE_STRING);
     $Pass = filter_var($_POST['Password'], FILTER_SANITIZE_STRING);
     
-
-   
     if ($stmt = $conexion->prepare("SELECT * FROM Administrador WHERE Correo=? AND Password=?")) {
 	
         /* ligar parámetros para marcadores */

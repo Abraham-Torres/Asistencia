@@ -208,7 +208,7 @@ if ($stmt = $conexion->prepare("SELECT * FROM Empleado WHERE Id_Empleado=?")) {
   </div>
   <div class="modal fade" id="Correo">
       <div class="modal-dialog modal-md">
-        <form class="modal-content" action="/EDITAR-LNG/{{establecimiento.email}}" method="post">
+        <form class="modal-content" action="modelo/empleados/modificar.php?campo=Correo&id=<?php echo $empleado?>" method="post">
           <div class="modal-header">
             <h4 class="modal-title">Modificar Correo</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
@@ -216,7 +216,7 @@ if ($stmt = $conexion->prepare("SELECT * FROM Empleado WHERE Id_Empleado=?")) {
             </button>
           </div>
           <div class="modal-body">
-           <input type="text" value="{{establecimiento.lng}}" class="form-control" name="lng" id="lng">
+           <input type="text" value="<?php  echo $correo ?>" class="form-control" name="dato" id="dato">
           </div>
           <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -229,7 +229,7 @@ if ($stmt = $conexion->prepare("SELECT * FROM Empleado WHERE Id_Empleado=?")) {
   </div>
   <div class="modal fade" id="Edad">
       <div class="modal-dialog modal-md">
-        <form class="modal-content" action="/EDITAR-LNG/{{establecimiento.email}}" method="post">
+        <form class="modal-content" action="modelo/empleados/modificar.php?campo=Edad&id=<?php echo $empleado?>" method="post">
           <div class="modal-header">
             <h4 class="modal-title">Modificar Edad</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
@@ -237,7 +237,7 @@ if ($stmt = $conexion->prepare("SELECT * FROM Empleado WHERE Id_Empleado=?")) {
             </button>
           </div>
           <div class="modal-body">
-           <input type="text" value="{{establecimiento.lng}}" class="form-control" name="lng" id="lng">
+           <input type="text" value="<?php  echo $edad ?>" class="form-control" name="dato" id="dato">
           </div>
           <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -248,9 +248,9 @@ if ($stmt = $conexion->prepare("SELECT * FROM Empleado WHERE Id_Empleado=?")) {
       </div>
       <!-- /.modal-dialog -->
   </div>
-  <div class="modal fade" id="uesto">
+  <div class="modal fade" id="Puesto">
       <div class="modal-dialog modal-md">
-        <form class="modal-content" action="/EDITAR-LNG/{{establecimiento.email}}" method="post">
+        <form class="modal-content" action="modelo/empleados/modificar.php?campo=Puesto&id=<?php echo $empleado?>" method="post">
           <div class="modal-header">
             <h4 class="modal-title">Modificar Puesto</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
@@ -258,7 +258,7 @@ if ($stmt = $conexion->prepare("SELECT * FROM Empleado WHERE Id_Empleado=?")) {
             </button>
           </div>
           <div class="modal-body">
-           <input type="text" value="{{establecimiento.lng}}" class="form-control" name="lng" id="lng">
+           <input type="text" value="<?php  echo $puesto ?>" class="form-control" name="dato" id="dato">
           </div>
           <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

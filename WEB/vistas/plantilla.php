@@ -44,6 +44,7 @@ include("modelo/conexion.php");
     
   if(isset($_GET["pagina"])){
     if($_GET["pagina"]=="asistensias" ||
+        $_GET["pagina"]=="asistencias/operaciones" ||
         $_GET["pagina"]=="roles" ||
         $_GET["pagina"]=="puestos/base_de_datos"||
         $_GET["pagina"]=="puestos/nuevo_empleado"||

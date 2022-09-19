@@ -17,46 +17,65 @@ $filas = mysqli_num_rows($resultado);
 
 
 ?>
-<div class="content mt-4 shadow">
+<div class="content mt-4 ">
 
 
 <div class="row">
           <div class="col-12">
-            <div class="card">
+            <div class="card shadow">
               <div class="card-header">
                 <h3 class="card-title">Tipos de Puesto</h3>
 
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                
               </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
+              <div class="card-body ">
+                <table id="example1" class="table table-bordered table-striped">
                   <thead>
                     <tr>
                       <th>ID</th>
                       <th>Tipo de Puesto</th>
+                      <th><i class="fa fa-solid fa-user-slash"></i> Operacion</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
                         if($filas){
                             while($data = mysqli_fetch_array($resultado)){
+                              
                                 echo "
-                                <tr>
+                                <tr class='text-center'>
                                 <td>".$data['Id_Puesto']."</td>
                                 <td>".$data['Puesto']."</td>
-                                </tr>
+                                
+                               
                                 ";
+                                ?>
+                                <td> 
+                                <div class="modal fade" id="eliminar<?php echo $data['Id_Puesto'] ?>">
+                                  <div class="modal-dialog modal-sm">
+                                    <div class="modal-content text-center" >
+                                      <div class="modal-header">
+                                        <h4 class="modal-title">¿Esta Seguro de Eliminar <?php echo $data['Puesto'];?> ?</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <div class="modal-footer justify-content-between">
+                                          <button type="button" class="btn btn-success" data-dismiss="modal">CANCELAR</button>
+                                          <a href="modelo/puesto/eliminar_tipo_puesto.php?Puesto=<?php echo $data['Id_Puesto']?>" class="btn btn-danger borderedit">ELIMINAR</a>                           
+                                        </div>
+                                      </div>
+                                      
+                                    </div>
+                                    <!-- /.modal-content -->
+                                  </div>
+                                  <!-- /.modal-dialog -->
+                                </div><button type="button"  data-toggle="modal" data-target="#eliminar<?php echo $data['Id_Puesto'] ?>" class="btn btn-danger btn-sm btnOpenEdit">ELIMINAR </button> </td>
+                                
+                                <?php
+                                 echo "</tr>";
                             }
                         }
                     ?>               
@@ -72,23 +91,31 @@ $filas = mysqli_num_rows($resultado);
 
 <div class="row">
     <div class="col-12">
-        <div class="card">
+        <div class="card shadow">
             <div class="card-header">
                 <h3 class="card-title">
                     AGREGAR NUEVO PUESTO
-                </h3>
-                
+                </h3>           
             </div>
             <div class="card-body">
                     <form action="modelo/puesto/registrar_puesto.php" name="reg_puesto" id="reg_puesto" method="post">
-                        <div class="input-group mb-3">
-                        <input required type="text" class="form-control" name="Puesto" placeholder="Puesto" require>
-                            
-                       </div>
-                        <div class="input-group mb-3">
-                        <button type="submit" class="btn btn-success form-control" name="reg_puesto" id="reg_puesto">Agregar</button>    
-                        
+                      <div class="row">
+                        <div class="col">
+                            <div class="form-group mb-3">
+                              <input required type="text" class="form-control" name="Puesto" placeholder="Puesto" require>
+                            </div>
                         </div>
+                      </div>
+                      <div class="row">
+                        <div class="col ">
+                          <div class="form-group text-center">
+                            <button type="submit" class="btn btn-success btn-md" name="reg_puesto" id="reg_puesto">Agregar</button>    
+                          
+                          </div>
+                        </div>
+                      </div>
+                       
+                       
                     </form>
                 </div>
         </div>

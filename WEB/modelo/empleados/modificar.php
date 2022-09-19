@@ -8,9 +8,10 @@ include("../conexion.php");
 <head>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
+  <meta http-equiv="Refresh" content="2;../../index.php?pagina=puestos/operaciones_empleado">
+ 
   <link rel="stylesheet" href="../../vistas/recursos/plugins/fontawesome-free/css/all.min.css">
   <!-- DataTables -->
-  <meta http-equiv="Refresh" content="5;../../index.php?pagina=puestos/nuevo_empleado">
   <link rel="stylesheet" href="../../vistas/recursos/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../../vistas/recursos/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="../../vistas/recursos/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
@@ -39,12 +40,11 @@ include("../conexion.php");
 
 
 
-if($campo = $_GET['campo']){
+if($campo = $_GET['campo'] and $id = $_GET['id']){
     
     $dato = htmlentities($_POST['dato']);
-
-    $sql_reg_emp = "INSERT INTO Empleado (Nombre,Correo,Edad,Password,Puesto,Activo) values 
-    ('$Nombre','$Correo','$Edad','$Password','$Puesto',false)";
+   
+    $sql_reg_emp = "UPDATE Empleado SET $campo = '$dato' WHERE Id_Empleado = '$id'";
     if(mysqli_query($conexion,$sql_reg_emp)){
     //Fucionamiento pendiente, el boton no redirecciona bien
         echo "
@@ -63,7 +63,7 @@ if($campo = $_GET['campo']){
                 <div class='col text-center'>
                         <p class='lead text-center'>
                             La pagina se redireccionara automaticamente. Si no es asi haga click en el siguiente boton.<br>
-                            <a href='../../index.php?pagina=puestos/nuevo_empleado' class='btn btn-primary btn-lg mt-4'>Volver a administración</a>
+                            <a href='../../index.php?pagina=puestos/operaciones_empleado' class='btn btn-primary btn-lg mt-4'>Volver a administración</a>
                         </p>
                 </div>
             </div>
@@ -92,7 +92,7 @@ if($campo = $_GET['campo']){
                <div class='col text-center'>
                        <p class='lead text-center'>
                            La pagina se redireccionara automaticamente. Si no es asi haga click en el siguiente boton.<br>
-                           <a href='../../index.php?pagina=puestos/nuevo_empleado' class='btn btn-danger btn-lg mt-4'>Volver a administración</a>
+                           <a href='../../index.php?pagina=puestos/operaciones_empleado' class='btn btn-danger btn-lg mt-4'>Volver a administración</a>
                        </p>
                </div>
            </div>

@@ -8,7 +8,7 @@ if($varsesion == null || $varsesion = ''){
 }
 
 $correo = $_SESSION['usuario']['correo'];
-$sql_empleado = "SELECT * FROM Empleado INNER JOIN  Puesto on Empleado.Puesto = Puesto.Id_Puesto ;";
+$sql_empleado = "SELECT * FROM Empleado ;";
 
 $resultado = mysqli_query($conexion,$sql_empleado);
 

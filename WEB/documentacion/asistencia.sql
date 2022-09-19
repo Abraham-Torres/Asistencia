@@ -54,7 +54,7 @@ CREATE TABLE `empleado` (
   `Correo` varchar(100) DEFAULT NULL,
   `Edad` int(11) DEFAULT NULL,
   `Password` varchar(200) DEFAULT NULL,
-  `Puesto` varchar(200) DEFAULT NULL,
+  `Puesto` int(11) DEFAULT NULL,
   `Activo` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -62,7 +62,38 @@ CREATE TABLE `empleado` (
 -- Volcado de datos para la tabla `empleado`
 --
 
-
+INSERT INTO `empleado` (`Id_Empleado`, `Nombre`, `Correo`, `Edad`, `Password`, `Puesto`, `Activo`) VALUES
+(10, 'Abraham Ezequiel Torres', 'abraham_torres81@outlook.com', 22, 'root', 1, 0),
+(11, 'Raul Imanol Espa&ntilde;a Soria', 'imanol.soria@outlook.com', 24, 'root', 1, 0),
+(12, 'Victor Eliel Aguilar Hernandez', 'victor.ah@aviva.one', 29, 'root', 1, 0),
+(14, 'EDUARDO EFRAIN SANTOS ARELLANO', 'system.otmx@gmail.com', 22, 'root', 1, 0),
+(15, 'prueba', 'prueba@gmail.com', 22, 'root', 1, 0),
+(16, 'prueba2', 'prueba2@gmail.com', 22, 'root', 1, 0),
+(17, 'prueba3', 'prueba3@gmail.com', 22, '1234', 1, 0),
+(18, 'prueba4', 'prueba4@gmail.com', 22, 'root', 1, 0),
+(19, 'prueba5', 'prueba5@gmail.com', 22, 'root', 1, 0),
+(21, 'prueba6', 'prueba6@gmail.com', 23, 'root', 1, 0),
+(22, 'prueba7', 'prueba7@gmail.com', 56, 'root', 1, 0),
+(23, 'prueba8', 'prueba8@gmail.com', 30, 'root', 1, 0),
+(24, 'unapruebamas ', 'unapruebamas@gmail.com', 34, 'root', 1, 0),
+(25, 'xd', 'xd@gmail.com', 90, 'root', 1, 0),
+(26, 'hola', 'hola@gmai.com', 34, 'root', 1, 0),
+(27, 'lol', 'lol@gmai.com', 20, 'root', 1, 0),
+(28, 'pop', 'pop@gmail.com', 1, 'root', 1, 0),
+(30, 'apple', 'apple@gmail.com', 22, 'root', 1, 0),
+(31, 'eeee', 'eee@gmail.com', 22, 'root', 1, 0),
+(32, 'eeee', 'eee@gmail.com', 22, 'root', 1, 0),
+(33, 'hshshs', 'hshshshs@gmail.com', 30, 'root', 1, 0),
+(34, 'jobs1', 'jobs1@apple.com', 70, 'root', 1, 0),
+(35, 'jobs1', 'jobs1@apple.com', 70, '', 1, 0),
+(36, 'juasjuas', 'juas@gmail.com', 90, 'root', 1, 0),
+(38, 'yeyeyey', 'yeyeyeye@gmail.com', 30, 'root', 1, 0),
+(40, 'yeyeyey1', 'yeyeyeye1@gmail.com', 30, 'root', 1, 0),
+(42, 'lalos', 'lalos2@gmail.com', 220, 'root', 1, 0),
+(43, 'lalos', 'lalos2@gmail.com', 220, '123456789', 1, 0),
+(44, 'lalos', 'lalos2@gmail.com', 220, 'ssss', 1, 0),
+(45, 'saassas', 'sasasss@gmai.com', 3, '1', 1, 0),
+(46, '1', '1@gmai.com', 1, '1', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -157,6 +188,9 @@ ALTER TABLE `administrador`
 --
 -- Indices de la tabla `empleado`
 --
+ALTER TABLE `empleado`
+  ADD PRIMARY KEY (`Id_Empleado`),
+  ADD KEY `FK_PUES_EMP` (`Puesto`);
 
 --
 -- Indices de la tabla `estado`

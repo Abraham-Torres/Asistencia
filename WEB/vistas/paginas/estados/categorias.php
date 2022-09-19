@@ -21,30 +21,21 @@ $filas = mysqli_num_rows($resultado);
 
 
 <div class="row">
-          <div class="col-12">
+          <div class="col">
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Categorias Estado</h3>
 
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                
               </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
+              <div class="card-body ">
+                <table id="example1" class="table table-bordered table-striped">
                   <thead>
                     <tr>
                       <th>ID</th>
                       <th>Estado</th>
+                      <th><i class="fa fa-solid fa-user-slash"></i>Operacion</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -52,11 +43,35 @@ $filas = mysqli_num_rows($resultado);
                         if($filas){
                             while($data = mysqli_fetch_array($resultado)){
                                 echo "
-                                <tr>
+                                <tr class='text-center'>
                                 <td>".$data['Id_Estado']."</td>
                                 <td>".$data['Estado']."</td>
-                                </tr>
-                                ";
+                                ";?>
+                                <td>
+                                <div class="modal fade" id="eliminar<?php echo $data['Id_Estado'] ?>">
+                                  <div class="modal-dialog modal-sm">
+                                    <div class="modal-content text-center" >
+                                      <div class="modal-header">
+                                        <h4 class="modal-title">¿Esta Seguro de Eliminar <?php echo $data['Estado'];?> ?</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <div class="modal-footer justify-content-between">
+                                          <button type="button" class="btn btn-success" data-dismiss="modal">CANCELAR</button>
+                                          <a href="modelo/estado/eliminar.php?Estado=<?php echo $data['Id_Estado']?>" class="btn btn-danger borderedit">ELIMINAR</a>                           
+                                        </div>
+                                      </div>
+                                      
+                                    </div>
+                                    <!-- /.modal-content -->
+                                  </div>
+                                  <!-- /.modal-dialog -->
+                                </div><button type="button"  data-toggle="modal" data-target="#eliminar<?php echo $data['Id_Estado'] ?>" class="btn btn-danger btn-sm btnOpenEdit">ELIMINAR </button> </td>
+                                
+                              <?php
+                              echo  " </tr>";
                             }
                         }
                     ?>               

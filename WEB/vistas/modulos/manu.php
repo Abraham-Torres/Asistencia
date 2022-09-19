@@ -96,7 +96,7 @@ if($varsesion == null || $varsesion = ''){
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="index.php?pagina=puestos/administrar" class="nav-link">
+                <a href="index.php?pagina=asistencias/operaciones" class="nav-link">
                 <i class="fas nav-icon fa-solid fa-screwdriver fa-wrench"></i>
                   <p>Operaciones</p>
                 </a>
