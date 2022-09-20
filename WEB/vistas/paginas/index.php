@@ -1,5 +1,4 @@
 
-
 <?php
 session_start();
 error_reporting(0);
@@ -8,62 +7,47 @@ if($varsesion == null || $varsesion = ''){
   header("location:paginas/login.php");
   die();
 }
-
 $correo = $_SESSION['usuario']['correo'];
-$sql_empleado_act = "SELECT * FROM Empleado INNER JOIN  Puesto on Empleado.Puesto = Puesto.Id_Puesto WHERE Activo = true;";
-$sql_empleado_ina = "SELECT * FROM Empleado INNER JOIN  Puesto on Empleado.Puesto = Puesto.Id_Puesto WHERE Activo = false;";
-
-$activos = mysqli_query($conexion,$sql_empleado_act);
-$inactivos = mysqli_query($conexion,$sql_empleado_ina);
-
-
-
+$consulta_activos = $conexion->prepare("SELECT * FROM Empleado WHERE Activo = true");
+$consulta_inactivos = $conexion->prepare("SELECT * FROM Empleado WHERE Activo = false");
+$consulta_activos->execute();
+$consulta_activos->store_result();
+$consulta_inactivos->execute();
+$consulta_inactivos->store_result();
+$activo = $consulta_activos->num_rows;
+$inactivo = $consulta_inactivos->num_rows;
 ?>
 
 
 <section class="container mt-4">
-
         <div class="row">
-
-        
-        <div class="col ">
-                    <!-- small box -->
-                    <div class="small-box bg-success">
-                      <div class="inner">
-                          <h3><?php 
-                          $filas = mysqli_num_rows($activos);
-                          echo $filas; ?><sup style="font-size: 20px"></sup></h3>
-
-                          <p>Puestos Activos</p>
-                      </div>
-                      <div class="icon">
-                <i class="ion ion-person"></i>
-                      </div>
-                    
-                    </div>
-          </div>
-
+            <div class="col ">
+                        <!-- small box -->
+                        <div class="small-box bg-success shadow">
+                          <div class="inner">
+                              <h3><?php echo $activo; ?><sup style="font-size: 20px"></sup></h3>
+                              <p>Puestos Activos</p>
+                          </div>
+                        <div class="icon">
+                          <i class="ion ion-person"></i>
+                          </div>
+                        </div>
+            </div>
           <div class="col">
                     <!-- small box -->
-                    <div class="small-box bg-danger">
+                    <div class="small-box bg-danger shadow">
                       <div class="inner">
-                          <h3><?php
-                           $filas = mysqli_num_rows($inactivos);
-                           echo $filas; ?><sup style="font-size: 20px"></sup></h3>
-
+                          <h3><?php echo $inactivo; ?><sup style="font-size: 20px"></sup></h3>
                           <p>Puestos Inactivos</p>
                       </div>
                       <div class="icon">
-                <i class="ion ion-person"></i>
+                          <i class="ion ion-person"></i>
                       </div>
-                    
                     </div>
           </div>
           </div>
-
           <div class="card bg-gradient-warning" style="position: relative; left: 0px; top: 0px;">
               <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
-
                 <h3 class="card-title">
                   <i class="far fa-calendar-alt"></i>
                   Calendario
@@ -85,7 +69,6 @@ $inactivos = mysqli_query($conexion,$sql_empleado_ina);
                   <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                   </button>
-                  
                 </div>
                 <!-- /. tools -->
               </div>
