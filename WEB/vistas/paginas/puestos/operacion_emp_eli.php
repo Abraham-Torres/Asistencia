@@ -258,7 +258,24 @@ if ($stmt = $conexion->prepare("SELECT * FROM Empleado WHERE Id_Empleado=?")) {
             </button>
           </div>
           <div class="modal-body">
-           <input type="text" value="<?php  echo $puesto ?>" class="form-control" name="dato" id="dato">
+            <select name="dato" id=""  class="form-control">
+            <?php
+              if($consulta_puesto = $conexion->prepare("SELECT Puesto FROM Puesto")){
+                  $consulta_puesto->execute();
+                  $consulta_puesto->store_result();
+                  if($consulta_puesto->num_rows == 0){
+                    echo "sin resultados";
+                  }
+                  $consulta_puesto->bind_result($puestos);
+                  while($consulta_puesto->fetch()){
+                    echo "
+                    <option value='$puestos'>$puestos</option>
+                    ";
+                  }
+              }
+            ?>
+            </select>
+          
           </div>
           <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

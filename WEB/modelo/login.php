@@ -2,9 +2,6 @@
 session_start();
 include("conexion.php");
 
-
-
-
 $iniciar = htmlentities($_POST['iniciar']);
 $start= filter_var($iniciar, FILTER_SANITIZE_STRING);
 if(isset($start)){
