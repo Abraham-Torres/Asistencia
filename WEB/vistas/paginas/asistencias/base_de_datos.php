@@ -20,10 +20,8 @@ $filas = mysqli_num_rows($resultado);
 <section class="content mt-4">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-12">
-    
+          <div class="col-12"> 
             <!-- /.card -->
-
             <div class="card shadow">
               <div class="card-header">
                 <h3 class="card-title">Lista de Asistencia</h3>
@@ -44,7 +42,6 @@ $filas = mysqli_num_rows($resultado);
                   </thead>
                   <tbody>
                   <?php
-
                   if($filas){
                       while($data = mysqli_fetch_array($resultado)){
                     echo "
@@ -58,10 +55,8 @@ $filas = mysqli_num_rows($resultado);
                     <td>".$data['Salida']."</td>
                   </tr>
                   ";
-
                 }
 }else{
-     
 }
 ?>                  </tbody>
                   <tfoot>

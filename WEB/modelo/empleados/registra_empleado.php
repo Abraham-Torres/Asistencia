@@ -45,41 +45,37 @@ if(isset($reg)){
     $Puesto = htmlentities($_POST['Puesto']);
     $Password = htmlentities($_POST['Password']);
     $Password2 = htmlentities($_POST['Password2']);
-
-    $sql_reg_emp = "INSERT INTO Empleado (Nombre,Correo,Edad,Password,Puesto,Activo) values 
-    ('$Nombre','$Correo','$Edad','$Password','$Puesto',false)";
-    if(mysqli_query($conexion,$sql_reg_emp)){
-    //Fucionamiento pendiente, el boton no redirecciona bien
-        echo "
-        <div class='container container-sm mt-4'>
-        <div class='card shadow'>
-        <div class='row'>
-                <div class='col text-center'>
-                <h3>Registro Exitoso</h3>
-                <br>
-                <img src='../../vistas/recursos/dist/img/correcto.png' class='center-all-contens'>
-                </div>
-            </div>
-        <div class='card-body'>
-            
+    if($registrar_puesto = $conexion->prepare("INSERT INTO Empleado (Nombre,Correo,Edad,Puesto,Password,Activo) values (?,?,?,?,?,?)")){
+        $activo = False;
+        $registrar_puesto->bind_param('ssisss',$Nombre,$Correo,$Edad,$Puesto,$Password,$activo);
+        if($registrar_puesto->execute()){
+            echo "
+            <div class='container container-sm mt-4'>
+            <div class='card shadow'>
             <div class='row'>
-                <div class='col text-center'>
-                        <p class='lead text-center'>
-                            La pagina se redireccionara automaticamente. Si no es asi haga click en el siguiente boton.<br>
-                            <a href='../../index.php?pagina=puestos/nuevo_empleado' class='btn btn-primary btn-lg mt-4'>Volver a administración</a>
-                        </p>
+                    <div class='col text-center'>
+                    <h3>Registro Exitoso</h3>
+                    <br>
+                    <img src='../../vistas/recursos/dist/img/correcto.png' class='center-all-contens'>
+                    </div>
                 </div>
+            <div class='card-body'>
+                
+                <div class='row'>
+                    <div class='col text-center'>
+                            <p class='lead text-center'>
+                                La pagina se redireccionara automaticamente. Si no es asi haga click en el siguiente boton.<br>
+                                <a href='../../index.php?pagina=puestos/nuevo_empleado' class='btn btn-primary btn-lg mt-4'>Volver a administración</a>
+                            </p>
+                    </div>
+                </div>
+                
             </div>
-            
-        </div>
-       </div>
-        </div>
-        
-        
-        ";
+           </div>
+            </div>
+            ";
     }else{
        echo "
-       
        <div class='container container-sm mt-4'>
        <div class='card shadow'>
        <div class='row'>
@@ -90,7 +86,6 @@ if(isset($reg)){
                </div>
            </div>
        <div class='card-body'>
-           
            <div class='row'>
                <div class='col text-center'>
                        <p class='lead text-center'>
@@ -99,19 +94,18 @@ if(isset($reg)){
                        </p>
                </div>
            </div>
-           
        </div>
       </div>
        </div>
        ";
     }
 }
-?>
-        
+}
+
+?> 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <script src="../../vistas/recursos/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
     <script src="../../vistas/recursos/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

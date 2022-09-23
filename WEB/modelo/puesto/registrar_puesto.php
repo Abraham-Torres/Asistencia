@@ -40,39 +40,39 @@ include("../conexion.php");
 $reg = htmlentities($_POST['reg_puesto']);
 if(isset($reg)){
     $Puesto = htmlentities($_POST['Puesto']);
-
-    $sql_reg_puesto = "INSERT INTO Puesto (Puesto) values 
-    ('$Puesto')";
-    if(mysqli_query($conexion,$sql_reg_puesto)){
-    //Fucionamiento pendiente, el boton no redirecciona bien
-        echo "
-        <div class='container container-sm mt-4'>
-        <div class='card shadow'>
-        <div class='row'>
-                <div class='col text-center'>
-                <h3>Registro Exitoso</h3>
-                <br>
-                <img src='../../vistas/recursos/dist/img/correcto.png' class='center-all-contens'>
-                </div>
-            </div>
-        <div class='card-body'>
+    if($registrar_estado = $conexion->prepare("INSERT INTO Puesto (Puesto) values (?)")){
+        $registrar_estado->bind_param('s',$Puesto);
+        if($registrar_estado->execute()){
             
-            <div class='row'>
-                <div class='col text-center'>
-                        <p class='lead text-center'>
-                            La pagina se redireccionara automaticamente. Si no es asi haga click en el siguiente boton.<br>
-                            <a href='../../index.php?pagina=tipo_puesto/operaciones' class='btn btn-primary btn-lg mt-4'>Volver a administración</a>
-                        </p>
-                </div>
-            </div>
-            
-        </div>
-       </div>
-        </div>
-        
-        
-        ";
-    }else{
+                //Fucionamiento pendiente, el boton no redirecciona bien
+                    echo "
+                    <div class='container container-sm mt-4'>
+                    <div class='card shadow'>
+                    <div class='row'>
+                            <div class='col text-center'>
+                            <h3>Registro Exitoso</h3>
+                            <br>
+                            <img src='../../vistas/recursos/dist/img/correcto.png' class='center-all-contens'>
+                            </div>
+                        </div>
+                    <div class='card-body'>
+                        
+                        <div class='row'>
+                            <div class='col text-center'>
+                                    <p class='lead text-center'>
+                                        La pagina se redireccionara automaticamente. Si no es asi haga click en el siguiente boton.<br>
+                                        <a href='../../index.php?pagina=tipo_puesto/operaciones' class='btn btn-primary btn-lg mt-4'>Volver a administración</a>
+                                    </p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                   </div>
+                    </div>            
+                    ";
+                
+        }
+    else{
        echo "
        
        <div class='container container-sm mt-4'>
@@ -100,6 +100,7 @@ if(isset($reg)){
        </div>
        ";
     }
+}
 }
 ?>
         

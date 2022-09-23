@@ -16,7 +16,6 @@ $filas = mysqli_num_rows($resultado);
 
 
 ?>
-
 <section class="content mt-4">
       <div class="container-fluid">
         <div class="row">
@@ -44,7 +43,6 @@ $filas = mysqli_num_rows($resultado);
                   </thead>
                   <tbody>
                   <?php
-
                   if($filas){
                       while($data = mysqli_fetch_array($resultado)){
                     echo "
@@ -58,10 +56,8 @@ $filas = mysqli_num_rows($resultado);
                     <td>".$data['Salida']."</td>
                   </tr>
                   ";
-
                 }
 }else{
-     
 }
 ?>                  </tbody>
                   <tfoot>
@@ -73,7 +69,6 @@ $filas = mysqli_num_rows($resultado);
                     <th>Estado</th>
                     <th>Inicio</th>
                     <th>Fin</th>
-                  
                   </tr>
                   </tfoot>
                 </table>
