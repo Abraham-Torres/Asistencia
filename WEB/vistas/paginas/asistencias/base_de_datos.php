@@ -42,22 +42,30 @@ $filas = mysqli_num_rows($resultado);
                   </thead>
                   <tbody>
                   <?php
-                  if($filas){
-                      while($data = mysqli_fetch_array($resultado)){
-                    echo "
-                    <tr>
-                    <td>".$data['Id_Jornada']."</td>
-                    <td>".$data['Fecha']."</td>
-                    <td>".$data['Nombre']."</td>
-                    <td>".$data['Puesto']."</td>
-                    <td>".$data['Estado']."</td>
-                    <td>".$data['Entrada']."</td>
-                    <td>".$data['Salida']."</td>
-                  </tr>
-                  ";
-                }
-}else{
-}
+                  if($consulta_jornada = $conexion->prepare("SELECT * FROM Jornada")){
+                    $consulta_jornada->execute();
+                    $consulta_jornada-store_result();
+                    if($consulta_jornada->num_rows == =){
+                      echo "sin datos";
+
+                    }else{
+                      $consulta_jornada->bind_result($id,$fecha,$nombre,$puesto,$estado,$entrada,$salida);
+                      while($consulta_jornada->fetch()){
+                        echo "
+                        <tr>
+                        <td>".$id."</td>
+                        <td>".$fecha."</td>
+                        <td>".$nombre."</td>
+                        <td>".$puesto."</td>
+                        <td>".$estado."</td>
+                        <td>".$entrada."</td>
+                        <td>".$salida."</td>
+                      </tr>
+                      ";
+                      }
+                    }
+                  }
+                 
 ?>                  </tbody>
                   <tfoot>
                   <tr>

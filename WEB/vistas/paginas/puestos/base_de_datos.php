@@ -8,12 +8,6 @@ if($varsesion == null || $varsesion = ''){
 }
 
 $correo = $_SESSION['usuario']['correo'];
-$sql_empleado = "SELECT * FROM Empleado ;";
-
-$resultado = mysqli_query($conexion,$sql_empleado);
-
-$filas = mysqli_num_rows($resultado);
-
 
 ?>
 
@@ -43,18 +37,23 @@ $filas = mysqli_num_rows($resultado);
                   </thead>
                   <tbody>
                   <?php
-
-                  if($filas){
-                      while($data = mysqli_fetch_array($resultado)){
-                    echo "
+                  if($consulta_empleado = $conexion->prepare("SELECT * FROM Empleado")){
+                    $consulta_empleado->execute();
+                    $consulta_empleado->store_result();
+                    if($consulta_empleado->num_rows == 0){
+                      echo "sin datos";
+                    }else{
+                      $consulta_empleado->bind_result($id,$nombre,$correo,$edad,$puesto,$password,$activo);
+                      while($consulta_empleado->fetch()){
+                        echo "
                     <tr>
-                    <td>".$data['Nombre']."</td>
-                    <td>".$data['Correo']."</td>
-                    <td>".$data['Edad']."</td>
-                    <td>".$data['Puesto']."</td>
-                    <td>".$data['Password']."</td>
+                    <td>".$nombre."</td>
+                    <td>".$correo."</td>
+                    <td>".$edad."</td>
+                    <td>".$puesto."</td>
+                    <td>".$password."</td>
                     ";
-                    if($data['Activo']==true){
+                    if($activo==true){
                       echo " <td><span class='badge bg-success'>Activo</span></td>";
                     }else{
                       echo " <td><span class='badge bg-danger'>Inactivo</span></td>";
@@ -63,10 +62,10 @@ $filas = mysqli_num_rows($resultado);
                   </tr>
                   ";
 
-                }
-}else{
-     
-}
+                      }
+                    }
+                  }
+                 
 ?>                  </tbody>
                   
                 </table>

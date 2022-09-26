@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-error_reporting(0);
+
 $varsesion = $_SESSION['usuario']['correo'];
 if($varsesion == null || $varsesion = ''){
   header("location:paginas/login.php");
@@ -9,11 +9,6 @@ if($varsesion == null || $varsesion = ''){
 }
 
 $correo = $_SESSION['usuario']['correo'];
-$sql_Estado = "SELECT * FROM Estado;";
-
-$resultado = mysqli_query($conexion,$sql_Estado);
-
-$filas = mysqli_num_rows($resultado);
 
 
 ?>
@@ -40,40 +35,54 @@ $filas = mysqli_num_rows($resultado);
                   </thead>
                   <tbody>
                     <?php
-                        if($filas){
-                            while($data = mysqli_fetch_array($resultado)){
-                                echo "
-                                <tr class='text-center'>
-                                <td>".$data['Id_Estado']."</td>
-                                <td>".$data['Estado']."</td>
-                                ";?>
-                                <td>
-                                <div class="modal fade" id="eliminar<?php echo $data['Id_Estado'] ?>">
-                                  <div class="modal-dialog modal-sm">
-                                    <div class="modal-content text-center" >
-                                      <div class="modal-header">
-                                        <h4 class="modal-title">¿Esta Seguro de Eliminar <?php echo $data['Estado'];?> ?</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
-                                          <span aria-hidden="true">&times;</span>
-                                        </button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <div class="modal-footer justify-content-between">
-                                          <button type="button" class="btn btn-success" data-dismiss="modal">CANCELAR</button>
-                                          <a href="modelo/estado/eliminar.php?Estado=<?php echo $data['Id_Estado']?>" class="btn btn-danger borderedit">ELIMINAR</a>                           
-                                        </div>
-                                      </div>
-                                      
-                                    </div>
-                                    <!-- /.modal-content -->
+                    if($consulta_estado= $conexion->prepare("SELECT * FROM Estado")){
+                      $consulta_estado->execute();
+                      $consulta_estado->store_result();
+                      if($consulta_estado->num_rows == 0){
+                          echo "sin datos";
+
+                      }else{
+                        $consulta_estado->bind_result($id,$estado);
+                        while($consulta_estado->fetch()){
+                          echo "
+                          <tr class='text-center'>
+                          <td>".$id."</td>
+                          <td>".$estado."</td>
+                          ";?>
+                          <td>
+                          <div class="modal fade" id="eliminar<?php echo $id; ?>">
+                            <div class="modal-dialog modal-sm">
+                              <div class="modal-content text-center" >
+                                <div class="modal-header">
+                                  <h4 class="modal-title">¿Esta Seguro de Eliminar <?php echo $estado; ?> ?</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-success" data-dismiss="modal">CANCELAR</button>
+                                    <a href="modelo/estado/eliminar.php?Estado=<?php echo $id; ?>" class="btn btn-danger borderedit">ELIMINAR</a>                           
                                   </div>
-                                  <!-- /.modal-dialog -->
-                                </div><button type="button"  data-toggle="modal" data-target="#eliminar<?php echo $data['Id_Estado'] ?>" class="btn btn-danger btn-sm btnOpenEdit">ELIMINAR </button> </td>
+                                </div>
                                 
-                              <?php
-                              echo  " </tr>";
-                            }
+                              </div>
+                              <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                          </div><button type="button"  data-toggle="modal" data-target="#eliminar<?php echo $id; ?>" class="btn btn-danger btn-sm btnOpenEdit">ELIMINAR </button> </td>
+                          
+                        <?php
+                        echo  " </tr>";
                         }
+                      }
+                      
+                    }
+                        
+                  
+                              
+                            
+                        
                     ?>               
                   </tbody>
                 </table>

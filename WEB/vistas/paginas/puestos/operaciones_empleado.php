@@ -8,11 +8,6 @@ if($varsesion == null || $varsesion = ''){
 }
 
 $correo = $_SESSION['usuario']['correo'];
-$sql_empleado = "SELECT * FROM Empleado ;";
-
-$resultado = mysqli_query($conexion,$sql_empleado);
-
-$filas = mysqli_num_rows($resultado);
 
 ?>
 <div class="content mt-4">
@@ -39,41 +34,39 @@ $filas = mysqli_num_rows($resultado);
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                    
                       <th>Nombre</th>
                       <th>Correo</th>
                       <th>Edad</th>
                       <th>Puesto</th>
-                     
                       <th><i class="fa fa-solid fa-user-slash"></i>Operacion</th>
                     </tr>
                   </thead>
                   <tbody>
-
                   <?php
-
-                  if($filas){
-                      while($data = mysqli_fetch_array($resultado)){
-                    echo "
-                    <tr>
-                   
-                    <td>".$data['Nombre']."</td>
-                    <td>".$data['Correo']."</td>
-                    <td>".$data['Edad']."</td>
-                    <td>".$data['Puesto']."</td>
-                
-                    ";
-                    ?>
-                    <td><a class="btn btn-block btn-success" href="index.php?pagina=puestos/operacion_emp_eli&Id_empleado=<?php echo $data['Id_Empleado'];?>" >Operaciones</a> </td>
-                    
-                    <?php
-                    echo "</tr>";
+                  if($consulta_empleado = $conexion->prepare("SELECT * FROM Empleado")){
+                    $consulta_empleado->execute();
+                    $consulta_empleado->store_result();
+                    if($consulta_empleado->num_rows == 0){
+                      echo "sin datos";
+                    }else{
+                      $consulta_empleado->bind_result($id,$nombre,$correo,$edad,$puesto,$password,$activo);
+                      while($consulta_empleado->fetch()){
+                        echo "
+                        <tr>
+                        <td>".$id."</td>
+                        <td>".$nombre."</td>
+                        <td>".$correo."</td>
+                        <td>".$edad."</td>
+                        <td>".$puesto."</td>
+                        ";
+                        ?>
+                        <td><a class="btn btn-block btn-success" href="index.php?pagina=puestos/operacion_emp_eli&Id_empleado=<?php echo $id;?>" >Operaciones</a> </td>
+                        <?php
+                        echo "</tr>";
+                          }
+                        }
                       }
-                    }
-
                     ?>
-                    
-                    
                   </tbody>
                 </table>
               </div>

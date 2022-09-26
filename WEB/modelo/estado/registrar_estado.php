@@ -37,9 +37,9 @@ include("../conexion.php");
     <?php
 
 
-$reg = htmlentities($_POST['reg_estado']);
+$reg = filter_var($_POST['reg_estado'], FILTER_SANITIZE_STRING);
 if(isset($reg)){
-    $Puesto= htmlentities($_POST['Estado']);
+    $Puesto= filter_var($_POST['Estado'], FILTER_SANITIZE_STRING);
     if($registrar_estado = $conexion->prepare("INSERT INTO Estado (Estado) values (?)")){
         $registrar_estado->bind_param('s',$Puesto);
         if($registrar_estado->execute()){

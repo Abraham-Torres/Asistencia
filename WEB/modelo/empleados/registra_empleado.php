@@ -37,14 +37,14 @@ include("../conexion.php");
     <?php
 
 
-$reg = htmlentities($_POST['reg_emp']);
+$reg = filter_var($_POST['reg_emp'], FILTER_SANITIZE_STRING);
 if(isset($reg)){
-    $Nombre= htmlentities($_POST['Nombre']);
-    $Correo = htmlentities($_POST['Correo']);
-    $Edad = htmlentities($_POST['Edad']);
-    $Puesto = htmlentities($_POST['Puesto']);
-    $Password = htmlentities($_POST['Password']);
-    $Password2 = htmlentities($_POST['Password2']);
+    $Nombre=filter_var($_POST['Nombre'],FILTER_SANITIZE_STRING);
+    $Correo = filter_var($_POST['Correo'], FILTER_SANITIZE_STRING);
+    $Edad = filter_var($_POST['Edad'], FILTER_SANITIZE_STRING);
+    $Puesto = filter_var($_POST['Puesto'], FILTER_SANITIZE_STRING);
+    $Password = filter_var($_POST['Password'], FILTER_SANITIZE_STRING);
+    $Password2 = filter_var($_POST['Password2'], FILTER_SANITIZE_STRING);
     if($registrar_puesto = $conexion->prepare("INSERT INTO Empleado (Nombre,Correo,Edad,Puesto,Password,Activo) values (?,?,?,?,?,?)")){
         $activo = False;
         $registrar_puesto->bind_param('ssisss',$Nombre,$Correo,$Edad,$Puesto,$Password,$activo);
