@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{% include 'modulos/header.html' %}
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+  {% include 'modulos/nav-bar.html' %}
+  <!-- /.navbar -->
+  {% include 'modulos/menu.html' %}
+  <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <section class="content">
+        <div class="card-header">
+            <h1>Base de datos puesto</h1>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped" id="example1">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Edad</th>
+                    <th>Puesto operativo</th>
+                    <th>Contrasena</th>
+                </tr>
+                </thead>
+                <tfoot>
+                    <th>identificador</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Edad</th>
+                    <th>Puesto operativo</th>
+                    <th>Contrasena</th>
+                </tfoot>
+
+                <tbody>
+                    {% for dato in puesto %}
+                    <tr>
+                        <td>{{ dato.identificador}}</td>
+                        <td>{{ dato.nombre }}</td>
+                        <td>{{ dato.correo }}</td>
+                        <td>{{ dato.edad }}</td>
+                        <td>{{ dato.tipo_puesto }}</td>
+                        <td>{{ dato.password }}</td>
+                    </tr>
+                        {% endfor %}
+                </tbody>
+                
+
+            </table>
+        </div>
+      </section>
+    </div>
+  <!-- /.content-wrapper -->
+  {% include 'modulos/footer.html' %}
+  {% include 'modulos/side-bar-control.html' %}
+  </div>
+<!-- ./wrapper -->
+<!-- jQuery -->
+{% include 'modulos/scripts.html' %}
+</body>
+
+</html>
+
+
+
