@@ -1,0 +1,161 @@
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="../../index3.html" class="brand-link">
+        
+      <img src="{{ url_for('static', filename = 'dist/img/imagenes-menu/mozart.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">ADMINISTRADOR</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user (optional) -->
+      
+
+      <!-- SidebarSearch Form -->
+     
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-header">PUESTOS</li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user fa-solid"></i>
+              <p>
+                Administrar
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/Registrar_puesto" class="nav-link">
+                  <i class="fas fa-solid fa-file fa-circle fa-plus nav-icon"></i>
+                  <p>Agregar</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/BD-ESTABLECIMIENTOS" class="nav-link">
+                  <i class="fas fa-solid fa-database nav-icon"></i>
+                  <p>Base de Datos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/OPERACIONES-ESTABLECIMIENTOS" class="nav-link">
+                  <i class="fas fa-solid fa-screwdriver fa-wrench nav-icon"></i>
+                  <p>Operaciones</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/UBICACIONES-ESTABLECIMIENTOS" class="nav-link">
+                  <i class="fas fa-solid fa-map fa-location nav-icon"></i>
+                  <p>Direcciones</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-header">CONDUCTORES</li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user fa-solid"></i>
+              <p>
+                Administrar
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../mailbox/mailbox.html" class="nav-link">
+                  <i class="fas fa-solid fa-file fa-circle fa-plus nav-icon"></i>
+                  <p>Agregar</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../mailbox/compose.html" class="nav-link">
+                  <i class="fas fa-solid fa-database nav-icon"></i>
+                  <p>Base de Datos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../mailbox/read-mail.html" class="nav-link">
+                  <i class="fas fa-solid fa-screwdriver fa-wrench nav-icon"></i>
+                  <p>Operaciones</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../mailbox/read-mail.html" class="nav-link">
+                    <i class="fas fa-solid fa-map fa-location nav-icon"></i>
+                  <p>Ubicaciones</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-header">UNIDADES</li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-car fa-solid"></i>
+              <p>
+                Administrar
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../mailbox/mailbox.html" class="nav-link">
+                  <i class="fas fa-solid fa-file fa-circle fa-plus nav-icon"></i>
+                  <p>Agregar</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../mailbox/compose.html" class="nav-link">
+                  <i class="fas fa-solid fa-database nav-icon"></i>
+                  <p>Base de Datos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../mailbox/read-mail.html" class="nav-link">
+                  <i class="fas fa-solid fa-screwdriver fa-wrench nav-icon"></i>
+                  <p>Operaciones</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../mailbox/read-mail.html" class="nav-link">
+                    <i class="fas fa-solid fa-map fa-location nav-icon"></i>
+                  <p>Localizar</p>
+                </a>
+              </li>
+              
+            </ul>
+          </li>
+         
+          
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+<script>
+  $('.toastsDefaultWarning').click(function() {
+      $(document).Toasts('create', {
+        class: 'bg-warning',
+        title: 'Toast Title',
+        subtitle: 'Subtitle',
+        body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+
+    $('.toastrDefaultError').click(function() {
+      toastr.error('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+    });
+
+    $('.swalDefaultWarning').click(function() {
+      Toast.fire({
+        icon: 'warning',
+        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+</script>
