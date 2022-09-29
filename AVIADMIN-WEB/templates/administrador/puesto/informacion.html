@@ -241,7 +241,7 @@
       <div class="modal-dialog modal-sm">
         <div class="modal-content text-center" >
           <div class="modal-header">
-            <h4 class="modal-title">¿Esta Seguro de Eliminar ?</h4>
+            <h4 class="modal-title">¿Esta Seguro de Eliminar {{puesto.identificador}}?</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -249,7 +249,7 @@
           <div class="modal-body">
           <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-success" data-dismiss="modal">CANCELAR</button>
-            <a href="" class="btn btn-danger borderedit">ELIMINAR</a>
+            <a href="{{url_for('eliminarPuesto',key=puesto.identificador)}}" class="btn btn-danger borderedit">ELIMINAR</a>
                                             
           </div>
           </div>
