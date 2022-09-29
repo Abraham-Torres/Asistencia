@@ -30,12 +30,14 @@ if(isset($start)){
             echo $id;
             $_SESSION['usuario']['nombre'] = $nombre;
             $_SESSION['usuario']['correo'] = $correo;
-            header("location:../index.php");
+            
         }
         
     
         /* cerrar sentencia */
         $stmt->close();
+    }else{
+        echo "sin consulta";
     }
 
 }

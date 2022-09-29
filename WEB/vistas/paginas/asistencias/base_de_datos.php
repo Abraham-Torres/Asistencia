@@ -44,8 +44,8 @@ $filas = mysqli_num_rows($resultado);
                   <?php
                   if($consulta_jornada = $conexion->prepare("SELECT * FROM Jornada")){
                     $consulta_jornada->execute();
-                    $consulta_jornada-store_result();
-                    if($consulta_jornada->num_rows == =){
+                    $consulta_jornada->store_result();
+                    if($consulta_jornada->num_rows == 0){
                       echo "sin datos";
 
                     }else{
