@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{% include 'modulos/header.html' %}
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+  {% include 'modulos/nav-bar.html' %}
+  <!-- /.navbar -->
+  {% include 'modulos/menu.html' %}
+  <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <section class="container mt-4">
+        <form class="card" action="/NUEVO-PUESTO" method="post">
+            <div class="card-header">
+                <h1 class="card-title">REGISTRAR-PUESTO</h1>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="" class="label">Nombre Completo</label>
+                            <input type="text" name="nombre" placeholder="Nombre Completo" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="" class="label">Correo Electronico</label>
+                            <input type="mail" name="correo" placeholder="Correo Electronico" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="" class="label">Edad</label>
+                            <input type="number" step="any" placeholder="Edad" name="edad" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="" class="label">Tipo Operador</label>
+                            <select name="tipo_puesto" id="" class="form-control">
+                                <option value="Operador" class="form-control">Operador</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="" class="label">Contraseña</label>
+                            <input type="password" name="password" placeholder="Contraseña" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="" class="label">Confirmar Contraseña</label>
+                            <input type="password" placeholder="Confirmar Contraseña" name="password-conf" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+      </section>
+    </div>
+  <!-- /.content-wrapper -->
+  {% include 'modulos/footer.html' %}
+  <!-- Control Sidebar -->
+  {% include 'modulos/sidebar-control.html' %}
+  <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+  <!-- jQuery -->
+{% include 'modulos/scripts.html' %}
+</body>
+
+</html>
+
+
+
+

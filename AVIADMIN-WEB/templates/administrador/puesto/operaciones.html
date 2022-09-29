@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{% include 'modulos/header.html' %}
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+  {% include 'modulos/nav-bar.html' %}
+  <!-- /.navbar -->
+  {% include 'modulos/menu.html' %}
+  <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <section class="content mt-4">
+        <div class="card shadow">
+            <div class="card-header">
+                <h1 class="card-title">
+                    OPERACIONES PUESTO
+                </h1>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped" id="example1">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Puesto Operativo</th>
+                            <th class="text-center"><i class="fa-solid fas fa-screwdriver fa-wrench"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for dato in puesto %}
+                        <tr>
+                            
+                            <td>{{ dato.nombre }}</td>
+                            <td>{{ dato.correo }}</td>
+                            <td>{{ dato.tipo_puesto }}</td>
+                            <td class="text-center">
+                                <div class="modal fade" id="{{ eliminar + dato.identificador }}">
+                                    <div class="modal-dialog modal-sm">
+                                      <div class="modal-content text-center" >
+                                        <div class="modal-header">
+                                          <h4 class="modal-title">¿Esta Seguro de Eliminar {{dato.correo}} ?</h4>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-success" data-dismiss="modal">CANCELAR</button>
+                                            <a href="" class="btn btn-danger borderedit">ELIMINAR</a>                           
+                                          </div>
+                                        </div>
+                                        
+                                      </div>
+                                      <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                  </div>
+                            <a href="{{url_for('informacionInformacion',key=dato.identificador)}}" class="btn btn-sm btn-success"><i class="fas fa-solid fa-pen nav-icon "></i></a>
+                            <button type="button"  data-toggle="modal" data-target="#{{eliminar + dato.correo}}" class="btn btn-danger btn-sm btnOpenEdit">ELIMINAR </button></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </section>
+    </div>
+  <!-- /.content-wrapper -->
+  {% include 'modulos/footer.html' %}
+  <!-- Control Sidebar -->
+  {% include 'modulos/sidebar-control.html' %}
+  <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+  <!-- jQuery -->
+{% include 'modulos/scripts.html' %}
+</body>
+
+</html>
+
+
+
+
+
+

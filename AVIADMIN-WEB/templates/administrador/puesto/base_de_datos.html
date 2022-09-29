@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{% include 'modulos/header.html' %}
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+  {% include 'modulos/nav-bar.html' %}
+  <!-- /.navbar -->
+  {% include 'modulos/menu.html' %}
+  <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <section class="content mt-4">
+        <div class="card shadow">
+            <div class="card-header">
+                <h1 class="card-title">
+                    BASE DE DATOS PUESTOS
+                </h1>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped" id="example1">
+                    <thead>
+                        <tr>
+                            <th>Identificador</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Edad</th>
+                            <th>Puesto Operativo</th>
+                            <th>Contraseña</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for dato in puesto %}
+                        <tr>
+                            <td>{{ dato.identificador }}</td>
+                            <td>{{ dato.nombre }}</td>
+                            <td>{{ dato.correo }}</td>
+                            <td>{{ dato.edad }}</td>
+                            <td>{{ dato.tipo_puesto }}</td>
+                            <td>{{ dato.password }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                            <th>Identificador</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Edad</th>
+                            <th>Puesto Operativo</th>
+                            <th>Contraseña</th>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+      </section>
+    </div>
+  <!-- /.content-wrapper -->
+  {% include 'modulos/footer.html' %}
+  <!-- Control Sidebar -->
+  {% include 'modulos/sidebar-control.html' %}
+  <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+  <!-- jQuery -->
+{% include 'modulos/scripts.html' %}
+</body>
+
+</html>
+
+
+
+
+
+
