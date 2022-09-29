@@ -38,6 +38,31 @@ def base_datos_puesto():
     puestosRecibidos=puestos.find()#para buscar en general
     return render_template('administrador/puesto/base-datos.html',titulo=titulo,puesto=puestosRecibidos)
 
+#operaciones de datos de puesto
+@app.route('/operaciones-puesto')
+def operaciones_puesto():  
+    puestos=DB['puestos']
+    titulo="Operaciones puesto"
+    puestosRecibidos=puestos.find()
+    return render_template('administrador/puesto/operaciones-puesto.html',titulo=titulo,puestos=puestosRecibidos)
+    
+#informacion puesto
+@app.route('/informacion-puesto<key>')#por la ruta va agarrar la key (la key es un argumento)
+def informacion_puesto(key):
+    titulo="Informacion puesto"
+    puestos=DB['puestos']
+    puestoRecibido=puestos.find_one({'identificador':key})
+    print(type(key),key)
+    return render_template('administrador/puesto/informacion.html',titulo=titulo, puestos=puestoRecibido)
+
+#informacion puesto-eliminars
+@app.route('/eliminar<key>')
+def informacion_puesto_eliminar(key):
+    print(type(key),key)
+    puestos=DB['puestos']
+    puestos.delete_one({'identificador':key})
+    return redirect('/operaciones-puesto')    
+
 @app.route('/')#ruta
 def inicio():
     titulo="Inicio administrador"

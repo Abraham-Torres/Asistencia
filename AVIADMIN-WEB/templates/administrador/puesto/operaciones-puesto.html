@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'modulos/header.html' %}
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Navbar -->
+    {% include 'modulos/nav-bar.html' %}
+    <!-- /.navbar -->
+    {% include 'modulos/menu.html' %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <section class="content mt-4">
+        <div class="card shadow">
+          <div class="card-header">
+            <h1 class="card-title">Operaciones puesto</h1>
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered table-striped" id="example1">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Correo</th>
+                  <th>Edad</th>
+                  <th>Puesto operativo</th>
+                  <th class="text-center"><i class="fas fa-solid fa-screwdriver fa-wrench nav-icon"></i></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for dato in puestos %}
+                <tr> 
+
+      <div class="modal fade" id="{{identificador}}">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content text-center">
+            <div class="modal-header">
+              <h4 class="modal-title">¿Esta Seguro de Eliminar ?</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-success" data-dismiss="modal">CANCELAR</button>
+                <button type="button" data-toggle="modal" data-target="{{identificador}}"
+                                class="btn btn-xs btn-link btnOpenEdit"><i class="fa-solid fas fa-pen"></i>
+                                EDITAR</button>
+
+              </div>
+            </div>
+
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+                  <td>{{ dato.nombre }}</td>
+                  <td>{{ dato.correo }}</td>
+                  <td>{{ dato.edad }}</td>
+                  <td>{{ dato.tipo_puesto }}</td>
+                  <td class="text-center"> <a href="{{url_for('informacion_puesto',key=dato.identificador)}}" class="btn btn-success"> <i class="fas fa-solid fa-pen nav-icon">
+                      </i> </a> <a href="{{url_for('informacion_puesto_eliminar',key=dato.identificador)}}" class="btn btn-danger"> <i
+                        class="fas fa-solid fa-screwdriver fa-trash nav-icon"></i> </a>
+                </tr>
+                {% endfor %}
+              </tbody>
+
+
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!-- /.content-wrapper -->
+    {% include 'modulos/footer.html' %}
+    {% include 'modulos/side-bar-control.html' %}
+  </div>
+  <!-- ./wrapper -->
+  <!-- jQuery -->
+  {% include 'modulos/scripts.html' %}
+</body>
+
+</html>
