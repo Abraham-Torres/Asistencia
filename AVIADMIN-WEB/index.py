@@ -2,6 +2,7 @@
 from flask import Flask,render_template,request,url_for,redirect#importamos flask
 from data_base import database as mongodb
 from forms.puesto.Puesto import Puesto
+from forms.operativos.Operativo import Operativo
 
 import random
 
@@ -63,21 +64,36 @@ def informacion_puesto(key):
 #INFORMACION/ELININAR
 @app.route('/eliminar<key>')
 def informacion_puesto_eliminar(key):
-    print(type(key),key)
     puestos=DB['puestos']
     puestos.delete_one({'identificador':key})
     return redirect('/operaciones-puesto')    
 
-#****FIN DE LA SECCION DE PUESTO*******
+#////////FIN DE LA SECCION DE PUESTO/////////#
 
 #*****SECCION DE PUESTOS OPERATIVOS*****
 
 #RENDERIZACION DE PUESTO OPERATIVO
 
-@app.route('/Operativo')
-def PuestoOperativo():
-    titulo="DB puesto operativo"
-    return render_template('administrador/Operativo/base-datos.html',titulo=titulo)
+#AGREGAR DATOS    
+ 
+@app.route('/NuevoOperativo',methods=['POST'])
+def nuevooperativo():
+    OperativosDB=DB['operativos']
+    PuestoOperativo=request.form['PuestoOperativo']
+    identificador=str(random.randint(0,2000))+PuestoOperativo
+
+    if identificador and PuestoOperativo:
+        tipo=Operativo(identificador,PuestoOperativo)
+        OperativosDB.insert_one(tipo.datosOperativoJson())
+        return redirect('/db-operativo')
+
+#MOSTRAR DATOS        
+@app.route('/db-operativo')
+def bdOperativo():
+    OperativosDB=DB['operativos']
+    OperativosRecibidos=OperativosDB.find()
+    print(OperativosRecibidos)
+    return render_template('administrador/Operativo/base-datos.html',op=OperativosRecibidos)
 
 
 @app.route('/')#ruta

@@ -25,10 +25,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for dato in TipoPuesto %}
+                                {% for dato in op %}
                                 <tr>
                                     <td>{{ dato.identificador}}</td>
-                                    <td>{{ dato.tipo_puesto }}</td>
+                                    <td>{{ dato.PuestoOperativo}}</td>
                                     <td class="text-center"> <a href="" class="btn btn-danger"> 
                                       <i class="fas fa-solid fa-screwdriver fa-trash nav-icon"></i> </a></td>
                                 </tr>
@@ -43,7 +43,7 @@
 
                 <!--Agregar-->
                 <section class="content mt-4">
-                    <form class="card shadow" action='/base-datos' method="post">
+                    <form class="card shadow" action='/NuevoOperativo' method="post">
                         <div class="card-header">
                             <h1 class="card-title">Registrar puesto operativo</h1>
                         </div>
@@ -51,20 +51,14 @@
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <label for="" class="label">ID</label>
-                                        <input type="text" class="form-control" name="identificador" placeholder="ID">
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="form-group">
                                         <label for="" class="label">Puesto operativo</label>
-                                        <input type="text" class="form-control" name="tipo_puesto" placeholder="Puesto">
+                                        <input type="text" class="form-control" name="PuestoOperativo" placeholder="Puesto">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <div class="form-group text-center">
+                                    <div class="form-group">
                                         <button type="submit" class="btn btn-success">Guardar</button>
                                     </div>
                                 </div>
