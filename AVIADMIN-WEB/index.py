@@ -1,6 +1,8 @@
+
 from flask import Flask,render_template,request,url_for,redirect#importamos flask
 from data_base import database as mongodb
 from forms.puesto.Puesto import Puesto
+
 import random
 
 
@@ -8,13 +10,15 @@ DB=mongodb.dbConecction()
 
 app=Flask(__name__)
 
+#******SECCION DE PUESTO********
 
-#seccion de puesto
+#RENDERIZACION DE NUEVO PUESTO
 @app.route('/Registrar_puesto')
 def Registrar_puesto():
     titulo="Nuevo puesto"
     return render_template('administrador/puesto/Registrar_puesto.html', titulo=titulo)
 
+#AGREGAR DATOS
 @app.route('/Nuevo-puesto',methods=['POST'])
 def NuevoPuesto():
    puestos=DB['puestos']#conexion
@@ -30,7 +34,8 @@ def NuevoPuesto():
         puestos.insert_one(puesto.datoPuestoJson())
         return redirect('/Registrar_puesto')    
 
-#mostrar datos de puesto
+#MOSTRAR DATOS DE PUESTOS
+
 @app.route('/db-puesto')
 def base_datos_puesto():  
     puestos=DB['puestos']
@@ -38,7 +43,7 @@ def base_datos_puesto():
     puestosRecibidos=puestos.find()#para buscar en general
     return render_template('administrador/puesto/base-datos.html',titulo=titulo,puesto=puestosRecibidos)
 
-#operaciones de datos de puesto
+#OPERACIONES DE PUESTOS
 @app.route('/operaciones-puesto')
 def operaciones_puesto():  
     puestos=DB['puestos']
@@ -46,7 +51,7 @@ def operaciones_puesto():
     puestosRecibidos=puestos.find()
     return render_template('administrador/puesto/operaciones-puesto.html',titulo=titulo,puestos=puestosRecibidos)
     
-#informacion puesto
+#INFORMACION DE PUESTO
 @app.route('/informacion-puesto<key>')#por la ruta va agarrar la key (la key es un argumento)
 def informacion_puesto(key):
     titulo="Informacion puesto"
@@ -55,13 +60,25 @@ def informacion_puesto(key):
     print(type(key),key)
     return render_template('administrador/puesto/informacion.html',titulo=titulo, puestos=puestoRecibido)
 
-#informacion puesto-eliminars
+#INFORMACION/ELININAR
 @app.route('/eliminar<key>')
 def informacion_puesto_eliminar(key):
     print(type(key),key)
     puestos=DB['puestos']
     puestos.delete_one({'identificador':key})
     return redirect('/operaciones-puesto')    
+
+#****FIN DE LA SECCION DE PUESTO*******
+
+#*****SECCION DE PUESTOS OPERATIVOS*****
+
+#RENDERIZACION DE PUESTO OPERATIVO
+
+@app.route('/Operativo')
+def PuestoOperativo():
+    titulo="DB puesto operativo"
+    return render_template('administrador/Operativo/base-datos.html',titulo=titulo)
+
 
 @app.route('/')#ruta
 def inicio():

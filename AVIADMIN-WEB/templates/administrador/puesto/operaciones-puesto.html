@@ -60,8 +60,8 @@
                   <td>{{ dato.edad }}</td>
                   <td>{{ dato.tipo_puesto }}</td>
                   <td class="text-center"> <a href="{{url_for('informacion_puesto',key=dato.identificador)}}" class="btn btn-success"> <i class="fas fa-solid fa-pen nav-icon">
-                      </i> </a> <a href="{{url_for('informacion_puesto_eliminar',key=dato.identificador)}}" class="btn btn-danger"> <i
-                        class="fas fa-solid fa-screwdriver fa-trash nav-icon"></i> </a>
+                      </i> </a> <a href="{{url_for('informacion_puesto_eliminar',key=dato.identificador)}}" class="btn btn-danger"> 
+                        <i class="fas fa-solid fa-screwdriver fa-trash nav-icon"></i> </a></td>
                 </tr>
                 {% endfor %}
               </tbody>
