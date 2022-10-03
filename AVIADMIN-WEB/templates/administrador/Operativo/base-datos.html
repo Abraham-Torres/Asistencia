@@ -29,7 +29,7 @@
                                 <tr>
                                     <td>{{ dato.identificador}}</td>
                                     <td>{{ dato.PuestoOperativo}}</td>
-                                    <td class="text-center"> <a href="" class="btn btn-danger"> 
+                                    <td class="text-center"> <a href="{{url_for('OperativoElim',key=dato.identificador)}}" class="btn btn-danger"> 
                                       <i class="fas fa-solid fa-screwdriver fa-trash nav-icon"></i> </a></td>
                                 </tr>
                                 {% endfor %}

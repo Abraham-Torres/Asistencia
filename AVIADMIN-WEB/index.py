@@ -17,7 +17,9 @@ app=Flask(__name__)
 @app.route('/Registrar_puesto')
 def Registrar_puesto():
     titulo="Nuevo puesto"
-    return render_template('administrador/puesto/Registrar_puesto.html', titulo=titulo)
+    OperativosDB=DB['operativos']
+    OperativosRecibidos=OperativosDB.find()
+    return render_template('administrador/puesto/Registrar_puesto.html', titulo=titulo,op=OperativosRecibidos)
 
 #AGREGAR DATOS
 @app.route('/Nuevo-puesto',methods=['POST'])
@@ -94,6 +96,13 @@ def bdOperativo():
     OperativosRecibidos=OperativosDB.find()
     print(OperativosRecibidos)
     return render_template('administrador/Operativo/base-datos.html',op=OperativosRecibidos)
+
+#ELIMINAR DATOS
+@app.route('/eliminarOperativo<key>')
+def OperativoElim(key):
+    OperativosDB=DB['operativos']
+    OperativosDB.delete_one({'identificador':key})
+    return redirect('/db-operativo')  
 
 
 @app.route('/')#ruta

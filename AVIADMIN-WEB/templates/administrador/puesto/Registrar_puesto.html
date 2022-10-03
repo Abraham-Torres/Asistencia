@@ -41,8 +41,11 @@
                 <div class="form-group">
                   <label for="" class="label">Operador</label>
                   <select name="tipo_puesto" id="" class="form-control">
-                    <option value="Operador" class="form-control">Operador</option>
+                    {% for dato in op %}
+                    <option value="{{dato.PuestoOperativo}}" class="form-control">{{dato.PuestoOperativo}}
+                    </option>{% endfor %}
                   </select>
+
                 </div>
               </div>
               <div class="col-md-4">
