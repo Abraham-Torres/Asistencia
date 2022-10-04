@@ -175,6 +175,8 @@ def bdAsistencia():
 
 #APLICACION WEB
 
+
+    
 @app.route('/')#ruta
 def inicio():
     titulo="Inicio administrador"
