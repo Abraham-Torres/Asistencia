@@ -25,19 +25,19 @@
                                     <th>Estado</th>
                                     <th>Hora de inicio de jornada</th>
                                     <th>Hora de termino de jornada</th>
-                                    <th class="text-center"><i
-                                            class="fas fa-solid fa-screwdriver fa-wrench nav-icon"></i></th>
+                                    <th>Activo</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for dato in op %}
                                 <tr>
                                     <td>{{ dato.identificador}}</td>
-                                    <td>{{ dato.EstadoOperativo}}</td>
-                                    <td class="text-center"> <a
-                                            href="{{url_for('CategoriaEliminar',key=dato.identificador)}}"
-                                            class="btn btn-danger">
-                                            <i class="fas fa-solid fa-screwdriver fa-trash nav-icon"></i> </a></td>
+                                    <td>{{ dato.nombre}}</td>
+                                    <td>{{ dato.correo}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

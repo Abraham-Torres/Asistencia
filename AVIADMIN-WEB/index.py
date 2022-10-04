@@ -1,6 +1,7 @@
 
-from flask import Flask,render_template,request,url_for,redirect#importamos flask
+from flask import Flask,render_template,request,url_for,redirect,session,flash#importamos flask
 from data_base import database as mongodb
+from werkzeug.security import generate_password_hash,check_password_hash
 from forms.puesto.Puesto import Puesto
 from forms.operativos.Operativo import Operativo
 from forms.estados.Estados import EstadosCat
@@ -10,6 +11,37 @@ import random
 DB=mongodb.dbConecction()
 
 app=Flask(__name__)
+
+#******SESIONES*********
+@app.route('/IniciarSesionAdmin')
+def iniciar_sesion():
+    titulo="INICIAR SESION"
+    return render_template('',titulo)
+
+@app.route('/AutenticacionUsuarioAdmin')
+def autenticacion_usuario():
+    correo=request.form['correo']
+    password=request.form['password']
+    usuario=False
+
+    if correo and password:
+        AdministradorDB=['admin']
+        AdminRecibido=AdministradorDB.find_one({'correo':correo})
+        if AdminRecibido:
+            if(check_password_hash(AdminRecibido['password'],password)==True):
+                session['usuario']=AdminRecibido['correo']
+                usuario=True
+                return redirect('/operaciones-puesto')
+            elif(check_password_hash(AdminRecibido['password'],password)==False):
+                flash("Error en la contraseña")
+            elif usuario==False:
+                flash("Error/usuario no existe")
+        return iniciar_sesion() 
+    flash("No se insertaron datos en el formulario")
+    return iniciar_sesion()               
+#////////////FIN DE SESIONES//////////////////////////                
+
+
 
 #******SECCION DE PUESTO********
 
@@ -133,10 +165,10 @@ def CategoriaEliminar(key):
 #////////////////FIN DE LA SECCION DE ESTADOS OPERATIVOS/////////////////
 
 #****************SECCION DE ASISTENCIA************************
-#Mostar datos (all in one?)
+#Mostar datos (all in one?)(standby)
 @app.route('/db-asistencia')
 def bdAsistencia():
-    AsistenciaDB=DB['operativos']
+    AsistenciaDB=DB['puestos']
     AsistenciaRecibida=AsistenciaDB.find()
     return render_template('administrador/Asistencia/base-datos.html',op=AsistenciaRecibida)
 
