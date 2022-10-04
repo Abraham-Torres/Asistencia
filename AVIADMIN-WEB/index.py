@@ -173,7 +173,7 @@ def bdAsistencia():
     return render_template('administrador/Asistencia/base-datos.html',op=AsistenciaRecibida)
 
 
-        
+#APLICACION WEB
 
 @app.route('/')#ruta
 def inicio():
