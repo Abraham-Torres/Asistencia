@@ -3,7 +3,7 @@ from flask import Flask,render_template,request,url_for,redirect#importamos flas
 from data_base import database as mongodb
 from forms.puesto.Puesto import Puesto
 from forms.operativos.Operativo import Operativo
-
+from forms.estados.Estados import EstadosCat
 import random
 
 
@@ -74,8 +74,6 @@ def informacion_puesto_eliminar(key):
 
 #*****SECCION DE PUESTOS OPERATIVOS*****
 
-#RENDERIZACION DE PUESTO OPERATIVO
-
 #AGREGAR DATOS    
  
 @app.route('/NuevoOperativo',methods=['POST'])
@@ -89,12 +87,11 @@ def nuevooperativo():
         OperativosDB.insert_one(tipo.datosOperativoJson())
         return redirect('/db-operativo')
 
-#MOSTRAR DATOS        
+#MOSTRAR DATOS (ALL IN ONE)       
 @app.route('/db-operativo')
 def bdOperativo():
     OperativosDB=DB['operativos']
     OperativosRecibidos=OperativosDB.find()
-    print(OperativosRecibidos)
     return render_template('administrador/Operativo/base-datos.html',op=OperativosRecibidos)
 
 #ELIMINAR DATOS
@@ -104,6 +101,28 @@ def OperativoElim(key):
     OperativosDB.delete_one({'identificador':key})
     return redirect('/db-operativo')  
 
+#//////////FIN DE LA SECCION DE PUESTOS OPERATIVOS//////////////
+#********SECCION DE ESTADOS OPERATIVOS*************
+
+#MOSTRAR DATOS (ALL IN ONE)
+@app.route('/db-estados')
+def estados():
+    EstadosDB=DB['estadoscat']
+    EstadosRecibidos=EstadosDB.find()
+    print(EstadosRecibidos)
+    return render_template('administrador/Estado/base-datos.html',op=EstadosRecibidos)
+
+#AGREGAR     
+@app.route('/NuevoEstadoCat',methods=['POST'])
+def NuevoEstado():
+    EstadosDB=DB['estadoscat']
+    CategoriaEstado=request.form['EstadoOperativo']
+    identificador=str(random.randint(0,2000))
+
+    if identificador  and CategoriaEstado:
+        categoria=EstadosCat(identificador,CategoriaEstado)
+        EstadosDB.insert_one(categoria.datosEstadoOperativoJson())
+        return redirect('/db-estados')
 
 @app.route('/')#ruta
 def inicio():
