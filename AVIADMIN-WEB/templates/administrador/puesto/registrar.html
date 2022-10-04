@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-{% include 'modulos/header.html' %}
+{% include 'administrador/modulos/header.html' %}
 
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
     <!-- Navbar -->
-    {% include 'modulos/nav-bar.html' %}
+    {% include 'administrador/modulos/nav-bar.html' %}
     <!-- /.navbar -->
-    {% include 'modulos/menu.html' %}
+    {% include 'administrador/modulos/menu.html' %}
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <section class="container mt-4">
-        <form class="card shadow" action='/Nuevo-puesto' method="post">
+        <form class="card shadow" action='/NUEVO-PUESTO' method="post">
           <div class="card-header">
             <h1 class="card-title">Registrar puesto</h1>
           </div>
@@ -75,12 +75,12 @@
       </section>
     </div>
     <!-- /.content-wrapper -->
-    {% include 'modulos/footer.html' %}
-    {% include 'modulos/side-bar-control.html' %}
+    {% include 'administrador/modulos/footer.html' %}
+    {% include 'administrador/modulos/side-bar-control.html' %}
   </div>
   <!-- ./wrapper -->
   <!-- jQuery -->
-  {% include 'modulos/scripts.html' %}
+  {% include 'administrador/modulos/scripts.html' %}
 </body>
 
 </html>
