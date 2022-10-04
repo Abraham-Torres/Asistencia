@@ -1,11 +1,14 @@
 
-from flask  import Flask, render_template,request,url_for,redirect
+from flask  import Flask, render_template,request, session,url_for,redirect,session,flash
+from werkzeug.security import generate_password_hash,check_password_hash
 from data_base import database as mongodb
 from forms.puesto.puesto import Puesto 
+
 import random
+
 BD = mongodb.dbConection()
 app = Flask(__name__)
-
+app.secret_key = b'\xaf\xf97>\x9a\xcd\xbc\xea\xc9Hr\xb4[\x10\xabA'
 #SECCION DE PUESTO
 @app.route('/REGISTRAR-PUESTO')
 def registrarPuesto():
@@ -65,6 +68,39 @@ def eliminarPuesto(key):
 def inicio():
     titulo = "INICIO ADMINISTRADOR"
     return render_template('index.html', titulo=titulo)
+
+
+
+@app.route('/INICIAR-SESION-APLICACION')
+def inicioAplicacion():
+    titulo = "INICIAR SESION EMPLEADO"
+    return render_template('aplicacion/index.html', titulo=titulo)
+
+@app.route('/AUTENTICACION-EMPLEADO', methods=['POST'])
+def autenticacionEmpleado():
+    correo = request.form['correo']
+    print(correo)
+    password = request.form['password']
+    print(password)
+    usuario = False
+    if correo and password:
+        puesto = BD['puestos']
+        puestoRecibido = puesto.find_one({"correo":correo})
+        print("dentro de auten")
+        if puestoRecibido:
+            print(puestoRecibido['password'])
+            if(check_password_hash(puestoRecibido['password'], password)==True):
+                session['usuario'] = puestoRecibido['correo']
+                print("usuario exite")
+                usuario = True
+                return redirect('/BASE-DE-DATOS-PUESTOS')
+            elif(check_password_hash(puestoRecibido['password'], password)==False):
+                flash("Error en Contra")
+        elif usuario == False:
+            flash("No existe usuario")  
+        return inicioAplicacion()   
+    flash("No se insertaron datos en el formulario")
+    return inicioAplicacion()
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
