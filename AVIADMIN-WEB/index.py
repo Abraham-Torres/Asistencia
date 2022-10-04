@@ -124,6 +124,25 @@ def NuevoEstado():
         EstadosDB.insert_one(categoria.datosEstadoOperativoJson())
         return redirect('/db-estados')
 
+ #ELIMINAR
+@app.route('/eliminarEstCat<key>')
+def CategoriaEliminar(key):
+    EstadosDB=DB['estadoscat']
+    EstadosDB.delete_one({'identificador':key})
+    return redirect('/db-estados')
+#////////////////FIN DE LA SECCION DE ESTADOS OPERATIVOS/////////////////
+
+#****************SECCION DE ASISTENCIA************************
+#Mostar datos (all in one?)
+@app.route('/db-asistencia')
+def bdAsistencia():
+    AsistenciaDB=DB['operativos']
+    AsistenciaRecibida=AsistenciaDB.find()
+    return render_template('administrador/Asistencia/base-datos.html',op=AsistenciaRecibida)
+
+
+        
+
 @app.route('/')#ruta
 def inicio():
     titulo="Inicio administrador"
