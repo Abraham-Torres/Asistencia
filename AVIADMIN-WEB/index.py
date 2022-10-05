@@ -11,96 +11,107 @@ import random
 DB=mongodb.dbConecction()
 
 app=Flask(__name__)
-
+app.secret_key = b'\xaf\xf97>\x9a\xcd\xbc\xea\xc9Hr\xb4[\x10\xabA'
 #******SESIONES*********
 @app.route('/INICIAR-SESION-ADMINISTRADOR')
 def iniciar_sesion():
     titulo="INICIAR SESION"
-    return render_template('',titulo)
+    return render_template('administrador/autenticacion/inicio-sesion.html',titulo = titulo)
 
-@app.route('/AUTENTICACION-ADMINISTRADOR')
+@app.route('/AUTENTICACION-ADMINISTRADOR',methods=['POST'])
 def autenticacion_usuario():
     correo=request.form['correo']
     password=request.form['password']
     usuario=False
     if correo and password:
-        AdministradorDB=['admin']
-        AdminRecibido=AdministradorDB.find_one({'correo':correo})
+        print("datos ingresado")
+        Administrador=DB['administrador']
+        AdminRecibido=Administrador.find_one({'correo':correo})
         if AdminRecibido:
+            print('usuario encontrado')
             if(check_password_hash(AdminRecibido['password'],password)==True):
-                session['usuario']=AdminRecibido['correo']
+                session['usuario-administrador']=AdminRecibido['correo']
                 usuario=True
-                return redirect('/operaciones-puesto')
+                session.pop("usuario-puesto",None)
+                return redirect('/BD-PUESTOS')
             elif(check_password_hash(AdminRecibido['password'],password)==False):
                 flash("Error en la contraseña")
-            elif usuario==False:
-                flash("Error/usuario no existe")
+        elif usuario == False:
+            flash("Error/usuario no existe")
         return iniciar_sesion() 
     flash("No se insertaron datos en el formulario")
     return iniciar_sesion()               
 #////////////FIN DE SESIONES//////////////////////////                
-
-
 
 #******SECCION DE PUESTO********
 
 #RENDERIZACION DE NUEVO PUESTO
 @app.route('/REGISTRAR-PUESTO')
 def Registrar_puesto():
-    titulo="Nuevo puesto"
-    OperativosDB=DB['operativos']
-    OperativosRecibidos=OperativosDB.find()
-    return render_template('administrador/puesto/registrar.html', titulo=titulo,op=OperativosRecibidos)
-
+    if 'usuario-administrador' in session:
+        titulo="Nuevo puesto"
+        OperativosDB=DB['operativos']
+        OperativosRecibidos=OperativosDB.find()
+        return render_template('administrador/puesto/registrar.html', titulo=titulo,op=OperativosRecibidos)
+    elif 'usuario-puesto' in session:
+        return redirect('INICIAR-SESION-ADMINISTRADOR')
 #AGREGAR DATOS
 @app.route('/NUEVO-PUESTO',methods=['POST'])
 def NuevoPuesto():
-   puestos=DB['puestos']#conexion
-   nombre=request.form['nombre']
-   correo=request.form['correo']
-   edad=request.form['edad']
-   tipo_puesto=request.form['tipo_puesto']
-   password=request.form['password']
-   identificador=str(random.randint(0,2000))+correo
+    puestos=DB['puestos']#conexion
+    nombre=request.form['nombre']
+    correo=request.form['correo']
+    edad=request.form['edad']
+    tipo_puesto=request.form['tipo_puesto']
+    password=request.form['password']
+    identificador=str(random.randint(0,2000))+correo
 
-   if nombre and correo and edad and tipo_puesto and password:
-        puesto=Puesto(identificador,nombre,correo,edad,tipo_puesto,password) 
-        puestos.insert_one(puesto.datoPuestoJson())
-        return redirect('/REGISTRAR-PUESTO')    
+    if nombre and correo and edad and tipo_puesto and password:
+            puesto=Puesto(identificador,nombre,correo,edad,tipo_puesto,password) 
+            puestos.insert_one(puesto.datoPuestoJson())
+            return redirect('/REGISTRAR-PUESTO')    
 
 #MOSTRAR DATOS DE PUESTOS
 
 @app.route('/BD-PUESTOS')
 def base_datos_puesto():  
-    puestos=DB['puestos']
-    titulo="BD puestos"
-    puestosRecibidos=puestos.find()#para buscar en general
-    return render_template('administrador/puesto/base-datos.html',titulo=titulo,puesto=puestosRecibidos)
-
+    if 'usuario-administrador' in session:
+        puestos=DB['puestos']
+        titulo="BD puestos"
+        puestosRecibidos=puestos.find()#para buscar en general
+        return render_template('administrador/puesto/base-datos.html',titulo=titulo,puesto=puestosRecibidos)
+    elif 'usuario-puesto' in session:
+        return redirect('INICIAR-SESION-ADMINISTRADOR')
 #OPERACIONES DE PUESTOS
 @app.route('/OPERACIONES-PUESTO')
 def operaciones_puesto():  
-    puestos=DB['puestos']
-    titulo="Operaciones puesto"
-    puestosRecibidos=puestos.find()
-    return render_template('administrador/puesto/operaciones-puesto.html',titulo=titulo,puestos=puestosRecibidos)
-    
+    if 'usuario-administrador' in session:
+        puestos=DB['puestos']
+        titulo="Operaciones puesto"
+        puestosRecibidos=puestos.find()
+        return render_template('administrador/puesto/operaciones-puesto.html',titulo=titulo,puestos=puestosRecibidos)
+    elif 'usuario-puesto' in session:
+        return redirect('INICIAR-SESION-ADMINISTRADOR')
 #INFORMACION DE PUESTO
 @app.route('/INFORMACION-PUESTO<key>')#por la ruta va agarrar la key (la key es un argumento)
 def informacion_puesto(key):
-    titulo="Informacion puesto"
-    puestos=DB['puestos']
-    puestoRecibido=puestos.find_one({'identificador':key})
-    print(type(key),key)
-    return render_template('administrador/puesto/informacion.html',titulo=titulo, puestos=puestoRecibido)
-
+    if 'usuario-administrador' in session:
+        titulo="Informacion puesto"
+        puestos=DB['puestos']
+        puestoRecibido=puestos.find_one({'identificador':key})
+        print(type(key),key)
+        return render_template('administrador/puesto/informacion.html',titulo=titulo, puestos=puestoRecibido)
+    elif 'usuario-puesto' in session:
+        return redirect('INICIAR-SESION-ADMINISTRADOR')
 #INFORMACION/ELININAR
 @app.route('/ELIMINAR-PUESTO<key>')
 def eliminar_puesto(key):
-    puestos=DB['puestos']
-    puestos.delete_one({'identificador':key})
-    return redirect('/OPERACIONES-PUESTO')    
-
+    if 'usuario-administrador' in session:
+        puestos=DB['puestos']
+        puestos.delete_one({'identificador':key})
+        return redirect('/OPERACIONES-PUESTO')    
+    elif 'usuario-puesto' in session:
+        return redirect('INICIAR-SESION-ADMINISTRADOR')
 #////////FIN DE LA SECCION DE PUESTO/////////#
 
 #*****SECCION DE PUESTOS OPERATIVOS*****
@@ -109,22 +120,26 @@ def eliminar_puesto(key):
  
 @app.route('/NUEVO-PUESTO-OPERATIVO',methods=['POST'])
 def nuevooperativo():
-    OperativosDB=DB['operativos']
-    PuestoOperativo=request.form['PuestoOperativo']
-    identificador=str(random.randint(0,2000))+PuestoOperativo
+    if 'usuario-administrador' in session:
+        OperativosDB=DB['operativos']
+        PuestoOperativo=request.form['PuestoOperativo']
+        identificador=str(random.randint(0,2000))+PuestoOperativo
 
-    if identificador and PuestoOperativo:
-        tipo=Operativo(identificador,PuestoOperativo)
-        OperativosDB.insert_one(tipo.datosOperativoJson())
-        return redirect('/OPERACIONES-PUESTO-OPERATIVO')
-
+        if identificador and PuestoOperativo:
+            tipo=Operativo(identificador,PuestoOperativo)
+            OperativosDB.insert_one(tipo.datosOperativoJson())
+            return redirect('/OPERACIONES-PUESTO-OPERATIVO')
+    elif 'usuario-puesto' in session:
+        return redirect('INICIAR-SESION-ADMINISTRADOR')
 #MOSTRAR DATOS (ALL IN ONE)       
 @app.route('/OPERACIONES-PUESTO-OPERATIVO')
 def bdOperativo():
-    OperativosDB=DB['operativos']
-    OperativosRecibidos=OperativosDB.find()
-    return render_template('administrador/Operativo/base-datos.html',op=OperativosRecibidos)
-
+    if 'usuario-administrador' in session:
+        OperativosDB=DB['operativos']
+        OperativosRecibidos=OperativosDB.find()
+        return render_template('administrador/Operativo/base-datos.html',op=OperativosRecibidos)
+    elif 'usuario-puesto' in session:
+        return redirect('INICIAR-SESION-ADMINISTRADOR')
 #ELIMINAR DATOS
 @app.route('/ELIMINAR-PUESTO-OPERATIVO<key>')
 def OperativoElim(key):
@@ -170,16 +185,70 @@ def bdAsistencia():
     AsistenciaDB=DB['puestos']
     AsistenciaRecibida=AsistenciaDB.find()
     return render_template('administrador/Asistencia/base-datos.html',op=AsistenciaRecibida)
-
-
-#APLICACION WEB
-
-
     
 @app.route('/INICIO-ADMINISTRADOR')#ruta
-def inicio():
+def inicioAdministrador():
     titulo="Inicio administrador"
     return render_template('administrador/index.html',titulo=titulo)#render template agarra cualquier archivo que este en su carpeta
+
+#SECCION DE APLICACION
+
+@app.route('/INICIAR-SESION-PUESTO')
+def inicar_sesion_puesto():
+    titulo="INICAR SESION PUESTO"
+    return render_template('aplicacion/autenticacion/iniciar-sesion.html',titulo=titulo)#render template
+
+@app.route('/AUTENTICACION-PUESTO',methods=['POST'])
+def autenticacion_puesto():
+    correo=request.form['correo']
+    password=request.form['password']
+    usuario=False
+    if correo and password:
+        print("datos ingresado")
+        Administrador=DB['puestos']
+        AdminRecibido=Administrador.find_one({'correo':correo})
+        if AdminRecibido:
+            print('usuario encontrado')
+            if(check_password_hash(AdminRecibido['password'],password)==True):
+                session['usuario-puesto']=AdminRecibido['correo']
+                usuario=True
+                session.pop("usuario-administrador",None)
+                return redirect('/INICIO-APLICACION')
+            elif(check_password_hash(AdminRecibido['password'],password)==False):
+                flash("Error en la contraseña")
+        elif usuario == False:
+            flash("Error/usuario no existe")
+        return inicar_sesion_puesto()
+    flash("No se insertaron datos en el formulario")
+    return inicar_sesion_puesto()    
+
+@app.route('/INICIO-APLICACION')
+def inicioPuesto():
+    if 'usuario-administrador' in session:
+        return redirect('INICIAR-SESION-PUESTO')
+    elif 'usuario-puesto' in session:
+        #render template agarra cualquier archivo que este en su carpeta
+        return render_template('aplicacion/index.html')
+
+#CONFIGURACION DE BACKEND SEGURIDAD
+@app.before_request
+def verificar_session():
+    ruta = request.path
+    if 'usuario-puesto' in session:
+        pass
+    elif not 'usuario-administrador' in session and ruta !="/INICIAR-SESION-ADMINISTRADOR" and ruta !='/AUTENTICACION-ADMINISTRADOR' and ruta != "/AUTENTICACION-PUESTO" and ruta !='/INICIAR-SESION-PUESTO' and not ruta.startswith("/static"):
+        flash("inicia sesion para continuar")
+        return redirect('/INICIAR-SESION-ADMINISTRADOR')
+    if 'usuario-administrador' in session:
+        pass
+    elif not 'usuario-puesto' in session and ruta !="/INICIAR-SESION-ADMINISTRADOR" and ruta !='/AUTENTICACION-ADMINISTRADOR' and ruta != "/AUTENTICACION-PUESTO" and ruta !='/INICIAR-SESION-PUESTO' and not ruta.startswith("/static"):
+        flash("inicia sesion para continuar")
+        return redirect('/INICIAR-SESION-PUESTO')
+
+@app.route('/CERRAR-SESION-ADMINISTRADOR')
+def cerrar_sesion_administrador():
+    session.pop("usuario-administrador",None)
+    return redirect('/INICIAR-SESION-ADMINISTRADOR')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",debug=True)#configuracion del host
