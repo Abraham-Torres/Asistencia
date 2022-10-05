@@ -1,12 +1,14 @@
 
+
 from flask import Flask,render_template,request,url_for,redirect,session,flash#importamos flask
 from data_base import database as mongodb
 from werkzeug.security import generate_password_hash,check_password_hash
 from forms.puesto.Puesto import Puesto
 from forms.operativos.Operativo import Operativo
 from forms.estados.Estados import EstadosCat
-import time
+from forms.notificaciones.Notificaciones import Notificacion
 import random
+import time
 
 
 DB=mongodb.dbConecction()
@@ -52,24 +54,34 @@ def Registrar_puesto():
     if 'usuario-administrador' in session:
         titulo="Nuevo puesto"
         OperativosDB=DB['operativos']
+        Notificaciones=DB['notificaciones']
+        notificacionesRecibidas=Notificaciones.find().limit(4)
         OperativosRecibidos=OperativosDB.find()
-        return render_template('administrador/puesto/registrar.html', titulo=titulo,op=OperativosRecibidos)
+        return render_template('administrador/puesto/registrar.html', titulo=titulo,op=OperativosRecibidos, notificacion = notificacionesRecibidas)
     elif 'usuario-puesto' in session:
         return redirect('INICIAR-SESION-ADMINISTRADOR')
 #AGREGAR DATOS
 @app.route('/NUEVO-PUESTO',methods=['POST'])
 def NuevoPuesto():
-    puestos=DB['puestos']#conexion
     nombre=request.form['nombre']
     correo=request.form['correo']
     edad=request.form['edad']
     tipo_puesto=request.form['tipo_puesto']
     password=request.form['password']
     identificador=str(random.randint(0,2000))+correo
+    idnotificacion=str(random.randint(0,2000))+correo
+    cuenta = session['usuario-administrador']
+    hora = time.strftime("%X")
+    contenido = "REGISTRO DE NUEVO PUESTO"
 
-    if nombre and correo and edad and tipo_puesto and password:
-            puesto=Puesto(identificador,nombre,correo,edad,tipo_puesto,password) 
+    if nombre and correo and edad and tipo_puesto and password and idnotificacion and cuenta and hora and contenido:
+            key = generate_password_hash(password,method='sha256')
+            puestos=DB['puestos']
+            notificaciones=DB['notificaciones']
+            puesto=Puesto(identificador,nombre,correo,edad,tipo_puesto,key) 
             puestos.insert_one(puesto.datoPuestoJson())
+            notificacion=Notificacion(idnotificacion,cuenta,hora,contenido)
+            notificaciones.insert_one(notificacion.datosNotificacionesJson())
             return redirect('/REGISTRAR-PUESTO')    
 
 #MOSTRAR DATOS DE PUESTOS
@@ -79,8 +91,10 @@ def base_datos_puesto():
     if 'usuario-administrador' in session:
         puestos=DB['puestos']
         titulo="BD puestos"
+        Notificaciones=DB['notificaciones']
+        notificacionesRecibidas=Notificaciones.find().limit(4)
         puestosRecibidos=puestos.find()#para buscar en general
-        return render_template('administrador/puesto/base-datos.html',titulo=titulo,puesto=puestosRecibidos)
+        return render_template('administrador/puesto/base-datos.html',titulo=titulo,puesto=puestosRecibidos,notificacion=notificacionesRecibidas)
     elif 'usuario-puesto' in session:
         return redirect('INICIAR-SESION-ADMINISTRADOR')
 #OPERACIONES DE PUESTOS
@@ -90,7 +104,9 @@ def operaciones_puesto():
         puestos=DB['puestos']
         titulo="Operaciones puesto"
         puestosRecibidos=puestos.find()
-        return render_template('administrador/puesto/operaciones-puesto.html',titulo=titulo,puestos=puestosRecibidos)
+        Notificaciones=DB['notificaciones']
+        notificacionesRecibidas=Notificaciones.find().limit(4)
+        return render_template('administrador/puesto/operaciones-puesto.html',titulo=titulo,puestos=puestosRecibidos,notificacion=notificacionesRecibidas)
     elif 'usuario-puesto' in session:
         return redirect('INICIAR-SESION-ADMINISTRADOR')
 #INFORMACION DE PUESTO
@@ -100,8 +116,10 @@ def informacion_puesto(key):
         titulo="Informacion puesto"
         puestos=DB['puestos']
         puestoRecibido=puestos.find_one({'identificador':key})
+        Notificaciones=DB['notificaciones']
+        notificacionesRecibidas=Notificaciones.find().limit(4)
         print(type(key),key)
-        return render_template('administrador/puesto/informacion.html',titulo=titulo, puestos=puestoRecibido)
+        return render_template('administrador/puesto/informacion.html',titulo=titulo, puestos=puestoRecibido,notificacion=notificacionesRecibidas)
     elif 'usuario-puesto' in session:
         return redirect('INICIAR-SESION-ADMINISTRADOR')
 #INFORMACION/ELININAR
@@ -138,7 +156,9 @@ def bdOperativo():
     if 'usuario-administrador' in session:
         OperativosDB=DB['operativos']
         OperativosRecibidos=OperativosDB.find()
-        return render_template('administrador/Operativo/base-datos.html',op=OperativosRecibidos)
+        Notificaciones=DB['notificaciones']
+        notificacionesRecibidas=Notificaciones.find().limit(4)
+        return render_template('administrador/Operativo/base-datos.html',op=OperativosRecibidos,notificacion=notificacionesRecibidas)
     elif 'usuario-puesto' in session:
         return redirect('INICIAR-SESION-ADMINISTRADOR')
 #ELIMINAR DATOS
@@ -160,7 +180,9 @@ def estados():
         EstadosDB=DB['estadoscat']
         EstadosRecibidos=EstadosDB.find()
         print(EstadosRecibidos)
-        return render_template('administrador/Estado/base-datos.html',op=EstadosRecibidos)
+        Notificaciones=DB['notificaciones']
+        notificacionesRecibidas=Notificaciones.find().limit(5)
+        return render_template('administrador/Estado/base-datos.html',op=EstadosRecibidos,notificacion=notificacionesRecibidas)
     elif 'usuario-puesto' in session:
         return redirect('INICIAR-SESION-ADMINISTRADOR')
 #AGREGAR     
@@ -292,8 +314,11 @@ def cerrar_sesion_puesto():
     session.pop("usuario-puesto",None)
     return redirect('/INICIAR-SESION-PUESTO')
 
-
+def pagina_no_encontrada(error):
+    titulo = "404 PAGINA NO ENCONTRADA"
+    return render_template('servidor/404.html',titulo=titulo)
 
 if __name__ == "__main__":
+    app.register_error_handler(404, pagina_no_encontrada)
     app.run(host="0.0.0.0",debug=True)#configuracion del host
 
