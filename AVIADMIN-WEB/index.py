@@ -143,54 +143,68 @@ def bdOperativo():
 #ELIMINAR DATOS
 @app.route('/ELIMINAR-PUESTO-OPERATIVO<key>')
 def OperativoElim(key):
-    OperativosDB=DB['operativos']
-    OperativosDB.delete_one({'identificador':key})
-    return redirect('/OPERACIONES-PUESTO-OPERATIVO')  
-
+    if 'usuario-administrador' in session:
+        OperativosDB=DB['operativos']
+        OperativosDB.delete_one({'identificador':key})
+        return redirect('/OPERACIONES-PUESTO-OPERATIVO')  
+    elif 'usuario-puesto' in session:
+        return redirect('INICIAR-SESION-ADMINISTRADOR')
 #//////////FIN DE LA SECCION DE PUESTOS OPERATIVOS//////////////
 #********SECCION DE ESTADOS OPERATIVOS*************
 
 #MOSTRAR DATOS (ALL IN ONE)
 @app.route('/OPERACIONES-ESTADO-OPERATIVO')
 def estados():
-    EstadosDB=DB['estadoscat']
-    EstadosRecibidos=EstadosDB.find()
-    print(EstadosRecibidos)
-    return render_template('administrador/Estado/base-datos.html',op=EstadosRecibidos)
-
+    if 'usuario-administrador' in session:
+        EstadosDB=DB['estadoscat']
+        EstadosRecibidos=EstadosDB.find()
+        print(EstadosRecibidos)
+        return render_template('administrador/Estado/base-datos.html',op=EstadosRecibidos)
+    elif 'usuario-puesto' in session:
+        return redirect('INICIAR-SESION-ADMINISTRADOR')
 #AGREGAR     
 @app.route('/NUEVO-ESTADO-OPERATIVO',methods=['POST'])
 def NuevoEstado():
-    EstadosDB=DB['estadoscat']
-    CategoriaEstado=request.form['EstadoOperativo']
-    identificador=str(random.randint(0,2000))
+    if 'usuario-administrador' in session:
+        EstadosDB=DB['estadoscat']
+        CategoriaEstado=request.form['EstadoOperativo']
+        identificador=str(random.randint(0,2000))
 
-    if identificador  and CategoriaEstado:
-        categoria=EstadosCat(identificador,CategoriaEstado)
-        EstadosDB.insert_one(categoria.datosEstadoOperativoJson())
-        return redirect('/OPERACIONES-ESTADO-OPERATIVO')
-
+        if identificador  and CategoriaEstado:
+            categoria=EstadosCat(identificador,CategoriaEstado)
+            EstadosDB.insert_one(categoria.datosEstadoOperativoJson())
+            return redirect('/OPERACIONES-ESTADO-OPERATIVO')
+    elif 'usuario-puesto' in session:
+        return redirect('INICIAR-SESION-ADMINISTRADOR')
  #ELIMINAR
 @app.route('/ELIMINAR-ESTADO-OPERATIVO<key>')
 def CategoriaEliminar(key):
-    EstadosDB=DB['estadoscat']
-    EstadosDB.delete_one({'identificador':key})
-    return redirect('/OPERACIONES-ESTADO-OPERATIVO')
+    if 'usuario-administrador' in session:
+        EstadosDB=DB['estadoscat']
+        EstadosDB.delete_one({'identificador':key})
+        return redirect('/OPERACIONES-ESTADO-OPERATIVO')
+    elif 'usuario-puesto' in session:
+        return redirect('INICIAR-SESION-ADMINISTRADOR')
 #////////////////FIN DE LA SECCION DE ESTADOS OPERATIVOS/////////////////
 
 #****************SECCION DE ASISTENCIA************************
 #Mostar datos (all in one?)(standby)
 @app.route('/db-asistencia')
 def bdAsistencia():
-    AsistenciaDB=DB['puestos']
-    AsistenciaRecibida=AsistenciaDB.find()
-    return render_template('administrador/Asistencia/base-datos.html',op=AsistenciaRecibida)
-    
+    if 'usuario-administrador' in session:
+        AsistenciaDB=DB['puestos']
+        AsistenciaRecibida=AsistenciaDB.find()
+        return render_template('administrador/Asistencia/base-datos.html',op=AsistenciaRecibida)
+    elif 'usuario-puesto' in session:
+        return redirect('INICIAR-SESION-ADMINISTRADOR')
 @app.route('/INICIO-ADMINISTRADOR')#ruta
 def inicioAdministrador():
-    titulo="Inicio administrador"
-    return render_template('administrador/index.html',titulo=titulo)#render template agarra cualquier archivo que este en su carpeta
-
+    if 'usuario-administrador' in session:
+        titulo="Inicio administrador"
+        return render_template('administrador/index.html',titulo=titulo)#render template agarra cualquier archivo que este en su carpeta
+    elif 'usuario-puesto' in session:
+        return redirect('INICIAR-SESION-ADMINISTRADOR')#render template agarra cualquier archivo que este en su carpeta
+    
 #SECCION DE APLICACION
 
 @app.route('/INICIAR-SESION-PUESTO')
@@ -249,6 +263,10 @@ def verificar_session():
 def cerrar_sesion_administrador():
     session.pop("usuario-administrador",None)
     return redirect('/INICIAR-SESION-ADMINISTRADOR')
+@app.route('/CERRAR-SESION-PUESTO')
+def cerrar_sesion_puesto():
+    session.pop("usuario-puesto",None)
+    return redirect('/INICIAR-SESION-PUESTO')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",debug=True)#configuracion del host
