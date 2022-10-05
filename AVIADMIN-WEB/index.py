@@ -75,9 +75,10 @@ def NuevoPuesto():
     contenido = "REGISTRO DE NUEVO PUESTO"
 
     if nombre and correo and edad and tipo_puesto and password and idnotificacion and cuenta and hora and contenido:
+            key = generate_password_hash(password,method='sha256')
             puestos=DB['puestos']
             notificaciones=DB['notificaciones']
-            puesto=Puesto(identificador,nombre,correo,edad,tipo_puesto,password) 
+            puesto=Puesto(identificador,nombre,correo,edad,tipo_puesto,key) 
             puestos.insert_one(puesto.datoPuestoJson())
             notificacion=Notificacion(idnotificacion,cuenta,hora,contenido)
             notificaciones.insert_one(notificacion.datosNotificacionesJson())
@@ -290,6 +291,11 @@ def cerrar_sesion_puesto():
     session.pop("usuario-puesto",None)
     return redirect('/INICIAR-SESION-PUESTO')
 
+def pagina_no_encontrada(error):
+    titulo = "404 PAGINA NO ENCONTRADA"
+    return render_template('servidor/404.html',titulo=titulo)
+
 if __name__ == "__main__":
+    app.register_error_handler(404, pagina_no_encontrada)
     app.run(host="0.0.0.0",debug=True)#configuracion del host
 
