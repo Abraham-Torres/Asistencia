@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from forms.puesto.Puesto import Puesto
 from forms.operativos.Operativo import Operativo
 from forms.estados.Estados import EstadosCat
+import time
 import random
 
 
@@ -241,8 +242,31 @@ def inicioPuesto():
     if 'usuario-administrador' in session:
         return redirect('INICIAR-SESION-PUESTO')
     elif 'usuario-puesto' in session:
+        datosPuestoaDB=DB['puestos']
+        DataPuesto=datosPuestoaDB.find_one({"correo":session['usuario-puesto']})
         #render template agarra cualquier archivo que este en su carpeta
-        return render_template('aplicacion/index.html')
+        return render_template('aplicacion/index.html',op=DataPuesto)
+
+#CONFIGURACION DE ASISTENCIA FLASK 
+@app.route('/AsistenciaEmpleado')
+def AsistenciaEmpleado():
+    if 'usuario-administrador' in session:
+        return redirect('INICIAR-SESION-PUESTO')
+    elif 'usuario-puesto' in session:
+        datosPuestoaDB=DB['puestos']
+        DataPuesto=datosPuestoaDB.find_one({"correo":session['usuario-puesto']})
+        nombre=DataPuesto['nombre']
+        puesto=DataPuesto['puesto']
+        fin="00-00-00"
+        hora=time.strftime("%X")
+        fecha=time.strftime("%d-%m-%y")
+        print(fecha)
+        print(hora)
+
+
+        return redirect('/INICIO-APLICACION')
+
+
 
 #CONFIGURACION DE BACKEND SEGURIDAD
 @app.before_request
@@ -267,6 +291,8 @@ def cerrar_sesion_administrador():
 def cerrar_sesion_puesto():
     session.pop("usuario-puesto",None)
     return redirect('/INICIAR-SESION-PUESTO')
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",debug=True)#configuracion del host

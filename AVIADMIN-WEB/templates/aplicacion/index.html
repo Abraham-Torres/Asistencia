@@ -17,8 +17,8 @@
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header text-white"
                      style="background: no-repeat center/100% url('{{ url_for('static', filename = 'dist/img/photo1.png')}}');">
-                  <h3 class="widget-user-username text-right">Elizabeth Pierce</h3>
-                  <h5 class="widget-user-desc text-right">Web Designer</h5>
+                  <h3 class="widget-user-username text-right">{{op.nombre}}</h3>
+                  <h5 class="widget-user-desc text-right">{{op.tipo_puesto}}</h5>
                 </div>
                 <div class="widget-user-image">
                     
@@ -28,24 +28,27 @@
                   <div class="row">
                     <div class="col-sm-4 border-right">
                       <div class="description-block">
-                        <h5 class="description-header">3,200</h5>
-                        <span class="description-text">SALES</span>
+                        <h5 class="description-header">Edad</h5>
+                        <span class="description-text">{{op.edad}}</span>
                       </div>
                       <!-- /.description-block -->
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-4 border-right">
                       <div class="description-block">
-                        <h5 class="description-header">13,000</h5>
-                        <span class="description-text">FOLLOWERS</span>
+                        <h5 class="description-header">Estado</h5>
+                        <span class="description-text">DROP</span>
                       </div>
                       <!-- /.description-block -->
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-4">
                       <div class="description-block">
-                        <h5 class="description-header">35</h5>
-                        <span class="description-text">PRODUCTS</span>
+                        <h5 class="description-header">Asistencia</h5>
+                        <a href="/AsistenciaEmpleado" class="btn btn-success">Registrar <i class="fa fa-clock"></i>
+                        </a>
+                        </div>
+                          
                       </div>
                       <!-- /.description-block -->
                     </div>
