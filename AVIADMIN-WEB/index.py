@@ -1,5 +1,3 @@
-
-
 from flask import Flask,render_template,request,url_for,redirect,session,flash#importamos flask
 from data_base import database as mongodb
 from werkzeug.security import generate_password_hash,check_password_hash
@@ -265,9 +263,11 @@ def inicioPuesto():
         return redirect('INICIAR-SESION-PUESTO')
     elif 'usuario-puesto' in session:
         datosPuestoaDB=DB['puestos']
+        DatosEstadoDB=DB['estadoscat'] 
+        DatosEstado=DatosEstadoDB.find() 
         DataPuesto=datosPuestoaDB.find_one({"correo":session['usuario-puesto']})
         #render template agarra cualquier archivo que este en su carpeta
-        return render_template('aplicacion/index.html',op=DataPuesto)
+        return render_template('aplicacion/index.html',op=DataPuesto,cat=DatosEstado)
 
 #CONFIGURACION DE ASISTENCIA FLASK 
 @app.route('/AsistenciaEmpleado')
@@ -276,6 +276,7 @@ def AsistenciaEmpleado():
         return redirect('INICIAR-SESION-PUESTO')
     elif 'usuario-puesto' in session:
         datosPuestoaDB=DB['puestos']
+        DatosEstadoDB=DB['estadoscat']  
         DataPuesto=datosPuestoaDB.find_one({"correo":session['usuario-puesto']})
         nombre=DataPuesto['nombre']
         puesto=DataPuesto['puesto']

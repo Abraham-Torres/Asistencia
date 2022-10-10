@@ -37,7 +37,15 @@
                     <div class="col-sm-4 border-right">
                       <div class="description-block">
                         <h5 class="description-header">Estado</h5>
-                        <span class="description-text">DROP</span>
+                         <!-- Select multiple-->
+                      <div class="form-group">
+                        <select name="EstadoOperativo" class="form-control">
+                          {% for dato in cat %}
+                          <option value="{{dato.EstadoOperativo}} " class="form-control">{{dato.EstadoOperativo}}
+                          </option>
+                          {% endfor %}
+                        </select>
+                      </div>
                       </div>
                       <!-- /.description-block -->
                     </div>
