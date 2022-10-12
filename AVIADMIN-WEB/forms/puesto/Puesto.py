@@ -1,10 +1,11 @@
 class Puesto:
     
-    def __init__(self, identificador, nombre, correo, edad, tipo_puesto, password):
+    def __init__(self, identificador, nombre, correo, edad, telefono, tipo_puesto, password):
         self.identificador = identificador
         self.nombre = nombre
         self.correo = correo
         self.edad = edad
+        self.telefono=telefono
         self.tipo_puesto = tipo_puesto
         self.password = password
     
@@ -14,6 +15,7 @@ class Puesto:
             "nombre": self.nombre,
             "correo": self.correo,
             "edad": self.edad,
+            "telefono":self.telefono,
             "tipo_puesto": self.tipo_puesto,
             "password": self.password
         }    

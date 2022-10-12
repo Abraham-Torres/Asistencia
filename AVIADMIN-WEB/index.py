@@ -64,6 +64,7 @@ def NuevoPuesto():
     nombre=request.form['nombre']
     correo=request.form['correo']
     edad=request.form['edad']
+    telefono=request.form['telefono']
     tipo_puesto=request.form['tipo_puesto']
     password=request.form['password']
     identificador=str(random.randint(0,2000))+correo
@@ -72,11 +73,11 @@ def NuevoPuesto():
     hora = time.strftime("%X")
     contenido = "REGISTRO DE NUEVO PUESTO"
 
-    if nombre and correo and edad and tipo_puesto and password and idnotificacion and cuenta and hora and contenido:
+    if nombre and correo and edad and telefono and tipo_puesto and password and idnotificacion and cuenta and hora and contenido:
             key = generate_password_hash(password,method='sha256')
             puestos=DB['puestos']
             notificaciones=DB['notificaciones']
-            puesto=Puesto(identificador,nombre,correo,edad,tipo_puesto,key) 
+            puesto=Puesto(identificador,nombre,correo,edad,telefono,tipo_puesto,key) 
             puestos.insert_one(puesto.datoPuestoJson())
             notificacion=Notificacion(idnotificacion,cuenta,hora,contenido)
             notificaciones.insert_one(notificacion.datosNotificacionesJson())
