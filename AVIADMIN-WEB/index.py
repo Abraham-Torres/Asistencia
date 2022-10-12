@@ -130,6 +130,16 @@ def eliminar_puesto(key):
         return redirect('/OPERACIONES-PUESTO')    
     elif 'usuario-puesto' in session:
         return redirect('INICIAR-SESION-ADMINISTRADOR')
+
+#INFORMACION/ACTUALIZAR 
+@app.route('/ACTUALIZAR-PUESTO')
+def actualizar_puesto():
+    if 'usuario-puesto' in session:
+        puestos=DB['puestos']
+        puestos.update_one()  
+        return redirect('/OPERACIONES-PUESTO') 
+    elif 'usuario-puesto' in session:
+        return redirect('/INICIAR-SESION-ADMINISTRADOR')        
 #////////FIN DE LA SECCION DE PUESTO/////////#
 
 #*****SECCION DE PUESTOS OPERATIVOS*****
