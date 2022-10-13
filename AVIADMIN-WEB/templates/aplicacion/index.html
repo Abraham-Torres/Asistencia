@@ -13,8 +13,7 @@ crossorigin="anonymous"></script>
     {% include 'aplicacion/modulos/menu.html' %}
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <section class="container mt-4">
-
+      <form class="container mt-4"action='/Asistencia-Empleado' method="post">
         <!-- Widget: user widget style 1 -->
         <div class="card card-widget widget-user shadow">
           <!-- Add the bg color to the header using any of the bg-* classes -->
@@ -101,7 +100,6 @@ crossorigin="anonymous"></script>
           <div class="widget-user-image mb-4">
           <br>
             <button type="summit" class="btn btn-app bg-success">
-              
               <i class="fas fa-clock"></i> Registrar
             </button>
           </div>
@@ -112,7 +110,7 @@ crossorigin="anonymous"></script>
 
     </div>
     <br>
-    </section>
+  </form>
   </div>
 
   <script>
@@ -122,10 +120,10 @@ var udateTime = function() {
         minutes = currentDate.getMinutes(), 
         seconds = currentDate.getSeconds(),
         weekDay = currentDate.getDay(), 
-        day = currentDate.getDay(), 
+        day = currentDate.getDate(), 
         month = currentDate.getMonth(), 
         year = currentDate.getFullYear();
- 
+        console.log (day);
     const dias = [
         'Domingo',
         'Lunes',
@@ -162,7 +160,7 @@ var udateTime = function() {
     }
  
 
-    var fecha = `${dias[weekDay]} ${day} de ${meses[month]} del ${year}`;
+    var fecha = `${dias[weekDay]} ${day} de ${meses[month]}`;
     var hora = `${hours} : ${minutes} : ${seconds}`;
 
    

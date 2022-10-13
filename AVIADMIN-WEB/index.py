@@ -5,6 +5,7 @@ from forms.puesto.Puesto import Puesto
 from forms.operativos.Operativo import Operativo
 from forms.estados.Estados import EstadosCat
 from forms.notificaciones.Notificaciones import Notificacion
+from forms.asistencia.Asistencia import Asistencia 
 import random
 import time
 
@@ -283,24 +284,32 @@ def inicioPuesto():
         return render_template('aplicacion/index.html',op=DataPuesto,cat=DatosEstado)
 
 #CONFIGURACION DE ASISTENCIA FLASK 
-@app.route('/AsistenciaEmpleado')
+@app.route('/Asistencia-Empleado',methods=['POST'])
 def AsistenciaEmpleado():
     if 'usuario-administrador' in session:
         return redirect('INICIAR-SESION-PUESTO')
     elif 'usuario-puesto' in session:
-        datosPuestoaDB=DB['puestos']
-        DatosEstadoDB=DB['estadoscat']  
-        DataPuesto=datosPuestoaDB.find_one({"correo":session['usuario-puesto']})
-        nombre=DataPuesto['nombre']
-        puesto=DataPuesto['puesto']
-        fin="00-00-00"
-        hora=time.strftime("%X")
-        fecha=time.strftime("%d-%m-%y")
-        print(fecha)
-        print(hora)
-
-
+       DatosPuestoDB=DB['puestos']
+       asistenciaDB=DB['asistencia'] 
+       DataPuesto=DatosPuestoDB.find_one({"correo":session['usuario-puesto']})
+       nombre=DataPuesto['nombre']
+       fecha=time.strftime("%d-%m-%y")
+       puesto=DataPuesto['tipo_puesto']
+       identificador=str(fecha)+str(session['usuario-puesto'])
+       print(identificador)
+       Operativo=request.form['EstadoOperativo']
+       inicio=time.strftime("%X")
+       fin="00:00:00"
+    
+       if identificador and nombre and fecha and inicio and  Operativo and puesto and fin:
+        asi=Asistencia(identificador,nombre,fecha, inicio, Operativo, puesto, fin)
+        asistenciaDB.insert_one(asi.datosAsistenciaJson())
         return redirect('/INICIO-APLICACION')
+
+
+
+
+    return redirect('/INICIO-APLICACION')
 
 
 

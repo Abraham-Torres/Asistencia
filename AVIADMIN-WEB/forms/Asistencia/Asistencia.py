@@ -1,19 +1,20 @@
 class Asistencia:
-    def __init__(self, identificador,Fecha,Nombre,Puesto,Estado,Inicio,Fin):
+    def __init__(self, identificador, nombre, fecha, inicio, Operativo,puesto,fin):
         self.identificador=identificador
-        self.Fecha=Fecha
-        self.Nombre=Nombre
-        self.Puesto = Puesto
-        self.Estado=Estado
-        self.Inicio=Inicio
-        self.Fin=Fin
+        self.nombre=nombre
+        self.fecha=fecha
+        self.inicio=inicio
+        self.Operativo=Operativo
+        self.puesto=puesto
+        self.fin=fin
+        
     def datosAsistenciaJson(self):
         return{
             'identificador':self.identificador,
-            'Fecha':self.Fecha,
-            'Nombre':self.Nombre,
-            'Puesto':self.Puesto,
-            'Estado':self.Estado,
-            'Inicio':self.Inicio,
-            'Fin':self.Fin
-        }   
+            'Fecha':self.nombre,
+            'Nombre':self.fecha,
+            'Inicio':self.inicio,
+            'Estado':self.Operativo,
+            'Puesto':self.puesto,
+            'Fin':self.fin
+            }   
