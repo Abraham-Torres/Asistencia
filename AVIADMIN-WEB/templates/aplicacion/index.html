@@ -101,6 +101,14 @@
             <button type="summit" class="btn btn-app bg-success">
               <i class="fas fa-clock"></i> Registrar
             </button>
+              {% if dato.Activo ==True %}
+              <button type="btn btn-app bg-danger">
+                <i class="fas fa-clock" disabled></i>
+              </button>
+              {% endif %}
+
+
+           
           </div>
           <div class="card-footer">
 
