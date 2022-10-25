@@ -19,25 +19,28 @@
                         <table class="table table-bordered table-striped" id="example1">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Nombre</th>
-                                    <th>Correo</th>
-                                    <th>Estado</th>
-                                    <th>Hora de inicio de jornada</th>
-                                    <th>Hora de termino de jornada</th>
+                                    <th>Fecha</th>
+                                    <th>Inicio</th>
+                                    <th>Operativo</th>
+                                    <th>Puesto</th>
+                                    <th>Fin</th>
                                     <th>Activo</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for dato in op %}
                                 <tr>
-                                    <td>{{ dato.identificador}}</td>
-                                    <td>{{ dato.nombre}}</td>
-                                    <td>{{ dato.correo}}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ dato.Nombre}}</td>
+                                    <td>{{ dato.Fecha}}</td>
+                                    <td>{{ dato.Inicio}}</td>
+                                    <td>{{ dato.Estado}}</td>
+                                    <td>{{ dato.Puesto}}</td>
+                                    <td>{{ dato.Fin}}</td>
+                                    {% if dato.Activo == True %}
+                                    <td class="text-center"> <a href="" class="btn btn-success"> 
+                                        <i class="fas fa-solid fa-check nav-icon"></i> </a></td>
+                                    {% endif %}
                                 </tr>
                                 {% endfor %}
                             </tbody>

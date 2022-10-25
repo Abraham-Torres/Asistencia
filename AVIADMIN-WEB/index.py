@@ -228,7 +228,7 @@ def CategoriaEliminar(key):
 @app.route('/db-asistencia')
 def bdAsistencia():
     if 'usuario-administrador' in session:
-        AsistenciaDB=DB['puestos']
+        AsistenciaDB=DB['asistencia']
         AsistenciaRecibida=AsistenciaDB.find()
         return render_template('administrador/Asistencia/base-datos.html',op=AsistenciaRecibida)
     elif 'usuario-puesto' in session:
@@ -301,9 +301,10 @@ def AsistenciaEmpleado():
        Operativo=request.form['EstadoOperativo']
        inicio=time.strftime("%X")
        fin="00:00:00"
+       activo=True
     
-       if identificador and nombre and fecha and inicio and  Operativo and puesto and fin:
-        asi=Asistencia(identificador,nombre,fecha, inicio, Operativo, puesto, fin)
+       if identificador and nombre and fecha and inicio and  Operativo and puesto and fin and activo:
+        asi=Asistencia(identificador,nombre,fecha, inicio, Operativo, puesto, fin,activo)
         asistenciaDB.insert_one(asi.datosAsistenciaJson())
         return redirect('/INICIO-APLICACION')
 
