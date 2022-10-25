@@ -5,7 +5,7 @@ from forms.puesto.Puesto import Puesto
 from forms.operativos.Operativo import Operativo
 from forms.estados.Estados import EstadosCat
 from forms.notificaciones.Notificaciones import Notificacion
-from forms.asistencia.Asistencia import Asistencia 
+from forms.Asistencia.Asistencia import Asistencia 
 import random
 import time
 
@@ -15,6 +15,7 @@ DB=mongodb.dbConecction()
 app=Flask(__name__)
 app.secret_key = b'\xaf\xf97>\x9a\xcd\xbc\xea\xc9Hr\xb4[\x10\xabA'
 #******SESIONES*********
+@app.route('/')
 @app.route('/INICIAR-SESION-ADMINISTRADOR')
 def iniciar_sesion():
     titulo="INICIAR SESION"
