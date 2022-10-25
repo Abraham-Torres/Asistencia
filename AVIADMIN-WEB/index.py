@@ -46,6 +46,29 @@ def autenticacion_usuario():
     return iniciar_sesion()               
 #////////////FIN DE SESIONES//////////////////////////                
 
+
+#*********HOMEPAGE**************
+@app.route('/HOME')
+def Homepage():
+    if 'usuario-administrador' in session:
+        titulo="Inicio"
+        return render_template('administrador/index.html',titulo=titulo)
+    elif 'usuario-puesto' in session:
+        return redirect('INICIAR-SESION-ADMINISTRADOR')    
+#///////FIN DEL HOMEPAGE///////////
+
+#*******INFO DEL USUARIO***********
+
+@app.route('/INFORMACION-USUARIO')
+def Informacion_Usuario():
+    if 'usuario-administrador' in session:
+        titulo="Informacion del usuario"
+        infoUsuario = DB['administrador']
+        Usuarios=infoUsuario.find_one()
+        return render_template('administrador/perfil/info.html',titulo=titulo,Usuarios=Usuarios)
+    elif 'usuario-puesto' in session:
+        return redirect('INICIAR-SESION-ADMINISTRADOR')    
+
 #******SECCION DE PUESTO********
 
 #RENDERIZACION DE NUEVO PUESTO
